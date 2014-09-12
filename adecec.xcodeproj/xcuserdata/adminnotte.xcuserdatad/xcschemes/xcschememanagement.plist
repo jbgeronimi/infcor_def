@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>adecec.xcscheme</key>
+		<key>infcor.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>167B2A3D1954C7CB001696DD</key>
+		<key>16F7566B19814EA200CF9F80</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>167B2A5E1954C7CB001696DD</key>
+		<key>16F7568C19814EA300CF9F80</key>
 		<dict>
 			<key>primary</key>
 			<true/>
