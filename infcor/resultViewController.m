@@ -26,18 +26,16 @@
     self.spinner.center = CGPointMake( self.view.frame.size.width /2,(self.view.frame.size.height / 2) - 64);
     self.spinner.color = [UIColor blackColor];
     self.spinner.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-   [self.spinner startAnimating];
+    [self.spinner startAnimating];
     [self.view addSubview:self.spinner];
-    
-    // id : traduction du mot en corse, toujours présent au retour de la requete. On fait le choix d'imposer la traduction du mot recherché. id ne dois pas etre present pour la requete mot_francais mais apres
-    if(([self.alangue isEqualToString:@"mot_corse"]) && !([self.params[@"dbb_query"] containsObject:@"FRANCESE"])){
-        [self.params[@"dbb_query"] insertObject:@"FRANCESE" atIndex:0];
-        [self.params[@"mot_corse"] insertObject:@"FRANCESE" atIndex:0];
-    }else if(([self.alangue isEqualToString:@"mot_francais"]) & !([self.params[@"dbb_query"] containsObject:@"id"])){
-        [self.params[@"dbb_query"] insertObject:@"id" atIndex:0 ];
-        [self.params[@"mot_francais"] insertObject:@"CORSU : " atIndex:0];
-    }
- 
+    /*
+//Modification des matrices affiche_mot et affiche_liste pour respecter le contexte de langue
+    if(([self.alangue isEqualToString:@"mot_francais"]) && !([self.params[@"affiche_mot"] containsObject:@"id"])){
+        [self.params[@"affiche_mot"] insertObject:@"id" atIndex:0];
+        [self.params[@"affiche_liste"] insertObject:@"FRANCESE" atIndex:0];}
+    else if (([self.alangue isEqualToString:@"mot_corse"]) && !([self.params[@"affiche_mot"] containsObject:@"FRANCESE"])){
+        [self.params[@"affiche_mot"] insertObject:@"FRANCESE" atIndex:0];
+        [self.params[@"affiche_liste"] insertObject:@"id" atIndex:0];}*/
 }
 
 
@@ -60,11 +58,6 @@
     self.resultTableView.dataSource = self;
     self.resultTableView.separatorStyle = UITableViewCellSelectionStyleNone;
 
-    if(([self.alangue isEqualToString:@"mot_corse"]) && !([self.params[@"dbb_query"] containsObject:@"FRANCESE"])){
-        [self.params[@"dbb_query"] insertObject:@"FRANCESE" atIndex:0];
-        [self.params[@"mot_corse"] insertObject:@"FRANCESE" atIndex:0];
-    }
-    //cas du mot_francais : id(CORSU) est ajouté apres, dans view did appear
     NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/debut.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[self.params[@"dbb_query"] componentsJoinedByString:@" "] ];
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //Connection à la base en mode asynchrone : utilisation de didReceiveresponse,didReceiveData,willCacheResponse,connectionDidFinishLoading
@@ -130,9 +123,11 @@
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-//a definir en fonction des resultats renvoyes par la base
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.text = self.risultati[indexPath.row][@"id"];
+    cell.textLabel.text = self.risultati[indexPath.row][[[self.params valueForKey:@"affiche_liste"] valueForKey:self.alangue][0]];
+    if([self.alangue isEqualToString:@"mot_francais"]){
+//mot francais : la traduction en corse contient " : " il faut les enlever pour l'esthetique
+        cell.textLabel.text = [cell.textLabel.text substringFromIndex:2];}
     cell.textLabel.font = self.gio;
     return cell;
 }
@@ -145,7 +140,9 @@
     detVC.detailRisultati = self.risultati[indexPath.row];
     detVC.alangue = self.alangue;
     detVC.params = self.params;
-    detVC.title = self.searchText;
+    detVC.title = self.risultati[indexPath.row][[[self.params valueForKey:@"affiche_liste"] valueForKey:self.alangue][0]];
+    if([self.alangue isEqualToString:@"mot_francais"]){
+        detVC.title = [detVC.title substringFromIndex:2];}
     detVC.gio = self.gio;
 
     [self.navigationController pushViewController:detVC animated:YES];
@@ -163,6 +160,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+ //   [self.params[@"affiche_liste"] removeObjectAtIndex:0];
 }
 /*
 #pragma mark - Navigation

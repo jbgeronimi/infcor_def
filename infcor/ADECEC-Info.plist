@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>adecec</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>adecec</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.adecec.adecec</string>
 	<key>CFBundleInfoDictionaryVersion</key>

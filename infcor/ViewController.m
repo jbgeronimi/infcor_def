@@ -55,6 +55,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
     [self.searchText becomeFirstResponder];
+/*
     //En fonction du contexte de langue il faut modifier les matrices dbb_query, mot_corse et mot_francais pour avoir l'affichage de la traduction voulue
     if(([self.alangue isEqualToString:@"mot_corse"]) && ([self.params[@"dbb_query"] containsObject:@"FRANCESE"])){
         [self.params[@"dbb_query"] removeObject:@"FRANCESE"];
@@ -62,7 +63,7 @@
     }else if(([self.alangue isEqualToString:@"mot_francais"]) & ([self.params[@"dbb_query"] containsObject:@"id"])){
         [self.params[@"dbb_query"] removeObject:@"id"];
         [self.params[@"mot_francais"] removeObject:@"CORSU : "];
-    }
+    }*/
 }
 
 - (void)viewDidLoad
@@ -271,21 +272,31 @@
 - (void)setDefaultValuesForVariables
 {
     NSMutableArray *dbb = [[NSMutableArray alloc] init];
-   // [dbb addObject:@"FRANCESE" ];
+    [dbb addObject:@"FRANCESE" ];
     [dbb addObject:@"DEFINIZIONE"];
     [dbb addObject:@"SINONIMI"];
     NSMutableArray *corsu = [[NSMutableArray alloc] init];
- //   [corsu addObject: @"FRANCESE"];
+    [corsu addObject: @"FRANCESE"];
     [corsu addObject:@"DEFINIZIONE"];
     [corsu addObject:@"SINONIMI"];
     NSMutableArray *fcese = [[NSMutableArray alloc] init];
-  //  [fcese addObject:@"FRANCAIS"];
+    [fcese addObject:@"CORSU : "];
     [fcese addObject:@"DEFINITION EN CORSE"];
     [fcese addObject:@"SYNONYMES"];
+    NSMutableArray *liste = [[NSMutableArray alloc] init];
+    [liste addObject:@{@"mot_corse":@"id",
+        @"mot_francais":@"FRANCESE"}];
+    NSMutableArray *mots = [[NSMutableArray alloc] init];
+    [mots addObject:@{@"mot_corse":@"FRANCESE",
+                      @"mot_francais":@"id"}];
+    [mots addObject:@"DEFINIZIONE"];
+    [mots addObject:@"SINONIMI"];
     self.params = @{
                     @"dbb_query":dbb,
                     @"mot_corse":corsu,
-                    @"mot_francais" : fcese};
+                    @"mot_francais" : fcese,
+                    @"affiche_liste":liste,
+                    @"affiche_mot":mots};
     self.lindex = 0;
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};
 }
