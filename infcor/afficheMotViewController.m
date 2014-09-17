@@ -45,7 +45,7 @@
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
 
     NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[self.params[@"dbb_query"] componentsJoinedByString:@" "] ];
-    if([self.alangue isEqualToString:@"mot_francais"]){[self.params[@"dbb_query"] insertObject:@"id" atIndex:0 ];}
+   // if([self.alangue isEqualToString:@"mot_francais"]){[self.params[@"dbb_query"] insertObject:@"id" atIndex:0 ];}
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *cerca = [NSURL URLWithString:cercaURL];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:cerca];
@@ -72,7 +72,7 @@
                                                            options:0
                                                              error:nil];
     self.risultati = json;
-    NSLog(@"risultati %@",self.risultati);
+  //  NSLog(@"risultati %@",self.risultati);
     self.title = self.searchText;
     [self.tableView reloadData];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -106,21 +106,16 @@
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
+    UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
+    UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
+    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
+    NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
     if((self.risultati.count > 0) && (indexPath.row < 1)) {
-    NSLog(@"count %i",self.risultati.count);
-        UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
-        UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-        NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
-        NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
         NSString *mottu = [self.risultati valueForKey:[[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]][0];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
         cell.textLabel.attributedText = leTexte;}
     else if(self.risultati.count > 0){
-        UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
-        UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-        NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
-        NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
         NSString *mottu = [self.risultati valueForKey:self.params[@"affiche_mot"][indexPath.row]][0];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
@@ -139,22 +134,26 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < 1 ) {
-        return 40; }
+    UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
+    UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
+    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
+    NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
+    if((self.risultati.count > 0) && (indexPath.row < 1)) {
+        NSString *mottu = [self.risultati valueForKey:[[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]][0];
+        NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
+        [leTexte appendAttributedString:leMot];
+        }
     else if(self.risultati.count > 0){
-        UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
-        UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-        NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
-        NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
         NSString *mottu = [self.risultati valueForKey:self.params[@"affiche_mot"][indexPath.row]][0];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
-        CGSize maxCell = CGSizeMake(self.view.frame.size.width - 20, 9999);
-        CGRect tailleCell = [leTexte boundingRectWithSize:maxCell
-                                                  options:NSStringDrawingUsesLineFragmentOrigin
-                                                  context:nil];
-        return tailleCell.size.height + MAX(15,tailleCell.size.height / 20);}
+        }
     else return 40;
+    CGSize maxCell = CGSizeMake(self.view.frame.size.width - 20, 9999);
+    CGRect tailleCell = [leTexte boundingRectWithSize:maxCell
+                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                              context:nil];
+    return tailleCell.size.height + MAX(15,tailleCell.size.height / 20);
 }
 
 @end

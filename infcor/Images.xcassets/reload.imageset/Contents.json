@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "reload-1.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "prefs.png"
+      "filename" : "reload.png"
     }
   ],
   "info" : {

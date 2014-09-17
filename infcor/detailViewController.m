@@ -59,21 +59,16 @@
     }
     UIFont *fonte = [UIFont fontWithName:@"Klill" size:18];
     cell.textLabel.font = fonte;
+    UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
+    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
+    NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
     if(([[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]) && (indexPath.row < 1)){
-        UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
-        UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-        NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
-        NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
         NSString *mottu = [@"" stringByAppendingString:[self.detailRisultati valueForKey:[[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]]];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
         cell.textLabel.attributedText = leTexte;
     }
     else{
-        UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
-        UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-        NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
-        NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
         NSString *mottu = [@"" stringByAppendingString:[self.detailRisultati valueForKey:self.params[@"affiche_mot"][indexPath.row]]];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
@@ -92,21 +87,25 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < 1 ) {
-        return 40; }
-    else{
     UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
     UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
     NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
     NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
-    NSString *mottu = [@"" stringByAppendingString:[self.detailRisultati valueForKey:self.params[@"affiche_mot"][indexPath.row]]];
-    NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
-    [leTexte appendAttributedString:leMot];
+    if(([[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]) && (indexPath.row < 1)){
+        NSString *mottu = [@"" stringByAppendingString:[self.detailRisultati valueForKey:[[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]]];
+        NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
+        [leTexte appendAttributedString:leMot];
+    }
+    else{
+        NSString *mottu = [@"" stringByAppendingString:[self.detailRisultati valueForKey:self.params[@"affiche_mot"][indexPath.row]]];
+        NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
+        [leTexte appendAttributedString:leMot];
+    }
     CGSize maxCell = CGSizeMake(self.view.frame.size.width - 20, 99999);
     CGRect tailleCell = [leTexte boundingRectWithSize:maxCell
                                               options:NSStringDrawingUsesLineFragmentOrigin
                                               context:nil];
-        return tailleCell.size.height + MAX(15,tailleCell.size.height / 20);}
+        return tailleCell.size.height + MAX(15,tailleCell.size.height / 20);
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

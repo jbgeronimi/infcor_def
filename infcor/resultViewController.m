@@ -89,6 +89,21 @@
     [self.tableView reloadData];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.spinner stopAnimating];
+    //Un message d'alerte si pas de résultat
+    if (self.risultati.count == 0){
+        NSDictionary *erreur =@{@"mot_corse":@"PRUBLEMA",
+                             @"mot_francais":@"ERREUR"};
+        NSDictionary *textAlert = @{@"mot_corse":@"Nisun Risultatu pè a vostra ricerca. Forse ùn avete micca srittu a vostra parolla curettamente. Pudete cuntattà l'ADECEC pè prupone una soluzione",
+                                 @"mot_francais":@"La banque INFCOR n'a pas de résultat à afficher. Il s'agit peut être d'une faute de frappe. Vous pouvez contacter l'ADECEC pour proposer une solution"};
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[erreur valueForKey:self.alangue]
+                                                        message:[textAlert valueForKey:self.alangue]
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:@"contact", nil];
+        [alert show];
+        
+    }
+   // NSLog(@"risultati %@",self.risultati);
 }
 
 -(void)alertView:(UIAlertView *)alarm clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -125,9 +140,8 @@
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = self.risultati[indexPath.row][[[self.params valueForKey:@"affiche_liste"] valueForKey:self.alangue][0]];
-    if([self.alangue isEqualToString:@"mot_francais"]){
-//mot francais : la traduction en corse contient " : " il faut les enlever pour l'esthetique
-        cell.textLabel.text = [cell.textLabel.text substringFromIndex:2];}
+//le mot contient " : " il faut les enlever pour l'esthetique
+    cell.textLabel.text = [cell.textLabel.text substringFromIndex:2];
     cell.textLabel.font = self.gio;
     return cell;
 }
@@ -141,8 +155,7 @@
     detVC.alangue = self.alangue;
     detVC.params = self.params;
     detVC.title = self.risultati[indexPath.row][[[self.params valueForKey:@"affiche_liste"] valueForKey:self.alangue][0]];
-    if([self.alangue isEqualToString:@"mot_francais"]){
-        detVC.title = [detVC.title substringFromIndex:2];}
+    detVC.title = [detVC.title substringFromIndex:2];
     detVC.gio = self.gio;
 
     [self.navigationController pushViewController:detVC animated:YES];

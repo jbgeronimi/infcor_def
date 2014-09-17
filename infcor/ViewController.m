@@ -55,15 +55,6 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
     [self.searchText becomeFirstResponder];
-/*
-    //En fonction du contexte de langue il faut modifier les matrices dbb_query, mot_corse et mot_francais pour avoir l'affichage de la traduction voulue
-    if(([self.alangue isEqualToString:@"mot_corse"]) && ([self.params[@"dbb_query"] containsObject:@"FRANCESE"])){
-        [self.params[@"dbb_query"] removeObject:@"FRANCESE"];
-        [self.params[@"mot_corse"] removeObject:@"FRANCESE"];
-    }else if(([self.alangue isEqualToString:@"mot_francais"]) & ([self.params[@"dbb_query"] containsObject:@"id"])){
-        [self.params[@"dbb_query"] removeObject:@"id"];
-        [self.params[@"mot_francais"] removeObject:@"CORSU : "];
-    }*/
 }
 
 - (void)viewDidLoad
@@ -76,6 +67,7 @@
                                                             }];
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000]];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    self.view.autoresizesSubviews = YES;
     self.view.backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];
     self.gio = [UIFont fontWithName:@"Klill" size:19];
     // je cree une vue pour le fond bleu
@@ -90,20 +82,26 @@
                                                object:nil];
     
     UIFont *titre = [UIFont fontWithName:@"Sansation" size:20];
-    NSString *langInit = @"Corsu \u21c4 Francese";
+    NSString *langInit = @"Corsu \u2192 Francese";
     self.alangue = @"mot_corse";
     //corsu - francese ou  francais-corse
     self.primu = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.primu.frame = CGRectMake(70,22, self.view.frame.size.width - 140, 41);
-    [self.primu.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    self.primu.frame = CGRectMake(50,21, self.view.frame.size.width - 100, 42);
+    [self.primu.titleLabel setTextAlignment:NSTextAlignmentLeft];
     [self.primu.titleLabel setFont:titre];
     self.primu.tintColor = [UIColor colorWithWhite:1 alpha:1];
+    //une image pour signifier l'inversion
+    [self.primu setImage:[UIImage imageNamed:@"reload.png"] forState:UIControlStateNormal];
+    self.primu.imageEdgeInsets = UIEdgeInsetsMake(0, self.primu.frame.size.width - 50 , 0, 0);
     [self.primu setTitle:langInit forState:UIControlStateNormal];
+    [self.primu setTitleEdgeInsets:UIEdgeInsetsMake(0, 25 - (self.primu.frame.size.width /2) , 0, 0)];
+   // NSLog(@"frame image %f",self.primu.imageView.frame.size.width);
     [self.primu addTarget:self
                    action:@selector(changeLanguage:)
          forControlEvents:UIControlEventTouchUpInside];
-    self.primu.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.primu.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
     [self.view addSubview:self.primu];
+    
     
     //le bouton d'acces aux preferences
     UIButton *prefBouton = [UIButton buttonWithType:UIButtonTypeSystem] ;
@@ -119,7 +117,6 @@
     //la zone de saisie du texte, le texte par defaut  et son bouton d'effacement
     self.searchText = [[UITextField alloc] initWithFrame:CGRectMake(30, 66, self.view.frame.size.width - 60, 35)];
     //le texte par defaut
-   // self.searchText.placeholder = [self.defText valueForKey:self.alangue];
     self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
     [self.searchText setBorderStyle:UITextBorderStyleRoundedRect];
     //le bouton d'effacement
@@ -136,6 +133,7 @@
     self.searchText.textColor = [UIColor whiteColor];
     [self.searchText setAutocorrectionType:UITextAutocorrectionTypeNo],
     [self.searchText setBackgroundColor:[UIColor colorWithRed:0.000 green:0.000 blue:0.200 alpha:0.850]];
+    self.searchText.returnKeyType = UIReturnKeySearch;
     //on interroge la base a chaque lettre tapée (editingChanged)
     [self.searchText addTarget:self
                   action:@selector(editingChanged:)
@@ -161,6 +159,8 @@
 //la croix d'effacement
 -(void)clearTextField:(id)sender {
     self.searchText.text = @"";
+    self.suggest = nil;
+    [self.suggestTableView reloadData];
 }
 
 -(void)editingChanged:(id)sender {
@@ -259,14 +259,17 @@
 }
 
 - (void)changeLanguage:(UIButton *) sender {
-    if ([sender.titleLabel.text isEqualToString:@"Corsu \u21c4 Francese"]){
-        [self.primu setTitle:@"Français \u21c4 Corse" forState:UIControlStateNormal];
+    if ([sender.titleLabel.text isEqualToString:@"Corsu \u2192 Francese"]){
+        [self.primu setTitle:@"Français \u2192 Corse" forState:UIControlStateNormal];
         self.alangue = @"mot_francais";
             }else {
-            [self.primu setTitle:@"Corsu \u21c4 Francese" forState:UIControlStateNormal];
+            [self.primu setTitle:@"Corsu \u2192 Francese" forState:UIControlStateNormal];
             self.alangue = @"mot_corse";
     }
     self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
+    //on a change la langue, il faut refaire une requete
+    [self editingChanged:self.searchText.text];
+    [self.suggestTableView reloadData];
 }
 
 - (void)setDefaultValuesForVariables
@@ -280,7 +283,7 @@
     [corsu addObject:@"DEFINIZIONE"];
     [corsu addObject:@"SINONIMI"];
     NSMutableArray *fcese = [[NSMutableArray alloc] init];
-    [fcese addObject:@"CORSU : "];
+    [fcese addObject:@"CORSU"];
     [fcese addObject:@"DEFINITION EN CORSE"];
     [fcese addObject:@"SYNONYMES"];
     NSMutableArray *liste = [[NSMutableArray alloc] init];
