@@ -54,7 +54,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
-    [self.searchText becomeFirstResponder];
+    //[self.searchText becomeFirstResponder];
 }
 
 - (void)viewDidLoad
@@ -69,8 +69,8 @@
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.view.autoresizesSubviews = YES;
     self.view.backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];
-    self.gio = [UIFont fontWithName:@"Klill" size:19];
-    // je cree une vue pour le fond bleu
+    self.gio = [UIFont fontWithName:@"Klill" size:20];
+   // je cree une vue pour le fond bleu
     UIView *lefond = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 115)];
     [lefond setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     lefond.backgroundColor = [UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000];
@@ -86,7 +86,7 @@
     self.alangue = @"mot_corse";
     //corsu - francese ou  francais-corse
     self.primu = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.primu.frame = CGRectMake(50,21, self.view.frame.size.width - 100, 42);
+    self.primu.frame = CGRectMake(55,21, self.view.frame.size.width - 100, 42);
     [self.primu.titleLabel setTextAlignment:NSTextAlignmentLeft];
     [self.primu.titleLabel setFont:titre];
     self.primu.tintColor = [UIColor colorWithWhite:1 alpha:1];
@@ -106,7 +106,7 @@
     //le bouton d'acces aux preferences
     UIButton *prefBouton = [UIButton buttonWithType:UIButtonTypeSystem] ;
     prefBouton.tintColor = [UIColor colorWithWhite:.9 alpha:1];
-    prefBouton.frame = CGRectMake(10, 22, 30, 30);
+    prefBouton.frame = CGRectMake(5, 21, 42, 42);
     UIImage *btn = [UIImage imageNamed:@"prefs.png"];
     [prefBouton setImage:btn forState:UIControlStateNormal];
     [prefBouton addTarget:self
@@ -115,7 +115,7 @@
     [self.view addSubview:prefBouton];
     
     //la zone de saisie du texte, le texte par defaut  et son bouton d'effacement
-    self.searchText = [[UITextField alloc] initWithFrame:CGRectMake(30, 66, self.view.frame.size.width - 60, 35)];
+    self.searchText = [[UITextField alloc] initWithFrame:CGRectMake(30, 64, self.view.frame.size.width - 60, 39)];
     //le texte par defaut
     self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
     [self.searchText setBorderStyle:UITextBorderStyleRoundedRect];
@@ -150,10 +150,18 @@
     self.suggestTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.suggestTableView.delegate = self;
     self.suggestTableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    self.suggestTableView.backgroundColor = [[UIColor alloc] initWithWhite:0.5 alpha:0.08];
+    self.suggestTableView.backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];/*backgroundColor = [[UIColor alloc] initWithWhite:0.5 alpha:0.08];*/
     self.suggestTableView.dataSource = self;
     self.suggestTableView.rowHeight = 28;
     [self.view addSubview:self.suggestTableView];
+    
+    //une vue pour l'image de fond
+    UIImageView *fiond = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fiond"]];
+    fiond.frame = CGRectMake(0, 115, self.view.frame.size.width, self.view.frame.size.height);
+    fiond.alpha = 0.19;
+    fiond.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
+    [self.view addSubview:fiond];
+    
 }
 
 //la croix d'effacement
@@ -235,8 +243,8 @@
     risultatiVC.searchText = self.searchText.text;
     risultatiVC.title = self.searchText.text;
     risultatiVC.gio = self.gio;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     if (risultatiVC.searchText.length > 1){
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self.navigationController pushViewController:risultatiVC animated:YES];
     }
     [self.searchText resignFirstResponder];
