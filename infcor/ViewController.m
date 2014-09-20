@@ -146,7 +146,7 @@
         forControlEvents:UIControlEventEditingDidEndOnExit];
     
     //un tableau avec les suggestions
-    self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, 115, self.view.frame.size.width - 60, self.view.frame.size.height - 286)];
+    self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, 115, self.view.frame.size.width - 60, self.view.frame.size.height - 115)];
     self.suggestTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.suggestTableView.delegate = self;
     self.suggestTableView.separatorStyle = UITableViewCellSelectionStyleNone;
@@ -248,6 +248,9 @@
         [self.navigationController pushViewController:risultatiVC animated:YES];
     }
     [self.searchText resignFirstResponder];
+    CGRect newTable = self.suggestTableView.frame;
+    newTable.size.height = self.view.frame.size.height - 115;
+    self.suggestTableView.frame = newTable;
   return YES;
 }
 
@@ -288,12 +291,12 @@
     [dbb addObject:@"SINONIMI"];
     NSMutableArray *corsu = [[NSMutableArray alloc] init];
     [corsu addObject: @"FRANCESE"];
-    [corsu addObject:@"DEFINIZIONE"];
-    [corsu addObject:@"SINONIMI"];
+    [corsu addObject:@"Definizione"];
+    [corsu addObject:@"Sinonimi"];
     NSMutableArray *fcese = [[NSMutableArray alloc] init];
     [fcese addObject:@"CORSU"];
-    [fcese addObject:@"DEFINITION EN CORSE"];
-    [fcese addObject:@"SYNONYMES"];
+    [fcese addObject:@"Définition en corse"];
+    [fcese addObject:@"Synonymes"];
     NSMutableArray *liste = [[NSMutableArray alloc] init];
     [liste addObject:@{@"mot_corse":@"id",
         @"mot_francais":@"FRANCESE"}];

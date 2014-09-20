@@ -60,7 +60,7 @@
     UIFont *fonte = [UIFont fontWithName:@"Klill" size:18];
     cell.textLabel.font = fonte;
     UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
+    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:[self.params[self.alangue][indexPath.row] uppercaseString] attributes:@{NSFontAttributeName:fonte20}];
     NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
     if(([[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]) && (indexPath.row < 1)){
         NSString *mottu = [@"" stringByAppendingString:[self.detailRisultati valueForKey:[[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]]];

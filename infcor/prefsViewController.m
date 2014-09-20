@@ -36,8 +36,8 @@
     self.allParams = @{
        @"dbb_query":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
      @"affiche_mot":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
-           @"mot_corse": @[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTE",@"SINONIMI",@"ANTONIMI",@"DERIVATI COMPOSTI",@"SPRESSIONI E PRUVERBII",@"ANALUGIE",@"CITAZIONI DA AUTORI",@"BIBLIOGRAFIA",@"INDICE"],
-       @"mot_francais" : @[@"ITALIEN",@"ANGLAIS",@"GENRE",@"PRONONCIATION",@"DEFINITION EN CORSE",@"ETYMOLOGIE",@"GRAMMAIRE",@"VARIANTES GRAPHIQUES",@"SYNONYMES",@"ANTONYMES",@"DERIVES COMPOSES",@"EXPRESSIONS ET PROVERBES",@"ANALOGIES",@"CITATIONS D'AUTEURS",@"BIBLIOGRAPHIE",@"INDICE"]
+           @"mot_corse": @[@"Talianu",@"Inglese",@"Natura",@"Prununzia",@"Definizione",@"Etimulugia",@"Grammatica",@"Variante",@"Sinonimi",@"Antonimi",@"Derivati Cumposti",@"Spressioni è Pruverbii",@"Analugie",@"Citazioni dà Autori",@"Bibliografia",@"Indice"],
+       @"mot_francais" : @[@"Italien",@"Anglais",@"Genre",@"Prononciation",@"Définition en Corse",@"Etymologie",@"Grammaire",@"Variantes Graphiques",@"Synonymes",@"Antonymes",@"Dérivés Composés",@"Expressions et Proverbes",@"Analogies",@"Citations d'Auteurs",@"Bibliographie",@"Indice"]
                     };
 // un tableau avec tous les elements de params
     self.afficheParams=[[UITableView alloc] init];
