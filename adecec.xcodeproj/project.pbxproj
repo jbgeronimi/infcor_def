@@ -12,6 +12,8 @@
 		162A0D9719B5C204007C894B /* Sansation_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 162A0D9619B5C204007C894B /* Sansation_Regular.ttf */; };
 		164D421419AA20810017F82B /* detailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D421319AA20810017F82B /* detailViewController.m */; };
 		166E21D7199FB37800640F55 /* afficheMotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166E21D6199FB37800640F55 /* afficheMotViewController.m */; };
+		1677E45919CF077400C6B619 /* pref.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677E45819CF077400C6B619 /* pref.m */; };
+		1677E45A19CF077400C6B619 /* pref.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677E45819CF077400C6B619 /* pref.m */; };
 		167DA2AF19B9018400CC9F1C /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167DA2AE19B9018400CC9F1C /* iAd.framework */; };
 		1684053619B23DFB009E0709 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1684053519B23DFB009E0709 /* SystemConfiguration.framework */; };
 		16C3B82A198A352B000322E8 /* CODE Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 16C3B829198A352B000322E8 /* CODE Bold.otf */; };
@@ -58,6 +60,8 @@
 		164D421319AA20810017F82B /* detailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailViewController.m; sourceTree = "<group>"; };
 		166E21D5199FB37800640F55 /* afficheMotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = afficheMotViewController.h; sourceTree = "<group>"; };
 		166E21D6199FB37800640F55 /* afficheMotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = afficheMotViewController.m; sourceTree = "<group>"; };
+		1677E45719CF077400C6B619 /* pref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pref.h; sourceTree = "<group>"; };
+		1677E45819CF077400C6B619 /* pref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = pref.m; sourceTree = "<group>"; };
 		167DA2AE19B9018400CC9F1C /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		1684053519B23DFB009E0709 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1693B33719C31984007133A6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
@@ -123,6 +127,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1677E45619CF074900C6B619 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1677E45719CF077400C6B619 /* pref.h */,
+				1677E45819CF077400C6B619 /* pref.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		16F7566319814EA200CF9F80 = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +171,7 @@
 		16F7567519814EA200CF9F80 /* infcor */ = {
 			isa = PBXGroup;
 			children = (
+				1677E45619CF074900C6B619 /* Models */,
 				16F756A819819A5000CF9F80 /* Transitions */,
 				16F756A4198198F400CF9F80 /* Controllers */,
 				16F7567F19814EA200CF9F80 /* AppDelegate.m */,
@@ -352,6 +366,7 @@
 				16F756AE19819B1100CF9F80 /* SideDismissalTransition.m in Sources */,
 				16F7567C19814EA200CF9F80 /* main.m in Sources */,
 				16F756A71981990F00CF9F80 /* prefsViewController.m in Sources */,
+				1677E45919CF077400C6B619 /* pref.m in Sources */,
 				16FC7C261984101500CE1C0F /* resultViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1677E45A19CF077400C6B619 /* pref.m in Sources */,
 				16F7569B19814EA300CF9F80 /* infcorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

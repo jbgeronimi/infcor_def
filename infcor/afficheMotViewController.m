@@ -136,7 +136,7 @@
 {
     UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
     UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:self.params[self.alangue][indexPath.row]  attributes:@{NSFontAttributeName:fonte20}];
+    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:[self.params[self.alangue][indexPath.row] uppercaseString]  attributes:@{NSFontAttributeName:fonte20}];
     NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
     if((self.risultati.count > 0) && (indexPath.row < 1)) {
         NSString *mottu = [self.risultati valueForKey:[[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]][0];
@@ -153,7 +153,7 @@
     CGRect tailleCell = [leTexte boundingRectWithSize:maxCell
                                               options:NSStringDrawingUsesLineFragmentOrigin
                                               context:nil];
-    return tailleCell.size.height + MAX(15,tailleCell.size.height / 20);
+    return tailleCell.size.height + MAX(35,tailleCell.size.height / 20);
 }
 
 @end

@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 
-@interface prefsViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
+@interface prefsViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource,NSCoding>
 
 @property (strong,nonatomic) UITableView *afficheParams;
 @property NSIndexPath *lindex;
 @property (strong, nonatomic) NSString  *alangue;
-@property (copy)  NSDictionary *params;
+@property  NSDictionary *params;
 @property (strong,nonatomic) NSDictionary *allParams;
 @end

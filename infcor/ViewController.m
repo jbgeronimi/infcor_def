@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "resultViewController.h"
 #import "afficheMotViewController.h"
+#import "pref.h"
 
 @interface ViewController ()
 
@@ -285,7 +286,7 @@
 
 - (void)setDefaultValuesForVariables
 {
-    NSMutableArray *dbb = [[NSMutableArray alloc] init];
+    /*NSMutableArray *dbb = [[NSMutableArray alloc] init];
     [dbb addObject:@"FRANCESE" ];
     [dbb addObject:@"DEFINIZIONE"];
     [dbb addObject:@"SINONIMI"];
@@ -295,7 +296,7 @@
     [corsu addObject:@"Sinonimi"];
     NSMutableArray *fcese = [[NSMutableArray alloc] init];
     [fcese addObject:@"CORSU"];
-    [fcese addObject:@"Définition en corse"];
+    [fcese addObject:@"Définition en Corse"];
     [fcese addObject:@"Synonymes"];
     NSMutableArray *liste = [[NSMutableArray alloc] init];
     [liste addObject:@{@"mot_corse":@"id",
@@ -310,7 +311,9 @@
                     @"mot_corse":corsu,
                     @"mot_francais" : fcese,
                     @"affiche_liste":liste,
-                    @"affiche_mot":mots};
+                    @"affiche_mot":mots};*/
+    pref *aPref = [[pref alloc] init];
+    self.params = aPref.params;
     self.lindex = 0;
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};
 }

@@ -9,7 +9,7 @@
 #import "prefsViewController.h"
 #import "ViewController.h"
 #import "AppDelegate.h"
-//#import "langue.h"
+#import "pref.h"
 
 @interface prefsViewController ()
 
@@ -30,6 +30,14 @@
     self.title = @"Options";
 }
 
+-(NSDictionary *)decodeWithCoder:(NSCoder *)aDecoder {
+    [aDecoder decodeObjectForKey:@"params"];
+    return self.params;
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.params forKey:@"params"];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -39,7 +47,10 @@
            @"mot_corse": @[@"Talianu",@"Inglese",@"Natura",@"Prununzia",@"Definizione",@"Etimulugia",@"Grammatica",@"Variante",@"Sinonimi",@"Antonimi",@"Derivati Cumposti",@"Spressioni è Pruverbii",@"Analugie",@"Citazioni dà Autori",@"Bibliografia",@"Indice"],
        @"mot_francais" : @[@"Italien",@"Anglais",@"Genre",@"Prononciation",@"Définition en Corse",@"Etymologie",@"Grammaire",@"Variantes Graphiques",@"Synonymes",@"Antonymes",@"Dérivés Composés",@"Expressions et Proverbes",@"Analogies",@"Citations d'Auteurs",@"Bibliographie",@"Indice"]
                     };
-// un tableau avec tous les elements de params
+    //self.params = [pref getPref].params;
+    pref *aPref = [pref getPref];
+    self.params = aPref.params;
+    // un tableau avec tous les elements de params
     self.afficheParams=[[UITableView alloc] init];
     self.afficheParams.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.afficheParams.delegate = self;
@@ -60,7 +71,7 @@
     vabe.tintColor = [UIColor blackColor];
     [vabe setTitle:@"OK" forState:UIControlStateNormal];
     [vabe addTarget:self action:@selector(goodJob:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:vabe];
+    //[self.view addSubview:vabe];
     return vabe;
 }
 
@@ -121,6 +132,9 @@
 - (IBAction) goodJob:(id)sender;
 {
     ViewController *VC = [[ViewController alloc] init];
+    pref *aPref = [[pref alloc] init];
+    aPref.params= self.params;
+    [pref savePref:aPref];
     VC.params = self.params;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
