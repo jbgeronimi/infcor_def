@@ -136,6 +136,7 @@
     aPref.params= self.params;
     [pref savePref:aPref];
     VC.params = self.params;
+   // VC.allParams = self.allParams;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

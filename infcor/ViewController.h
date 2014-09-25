@@ -18,6 +18,7 @@
 @property (strong,nonatomic) NSMutableArray *suggest;
 @property (retain,nonatomic) UITableView *suggestTableView;
 @property  NSDictionary *params;
+@property (strong,nonatomic) NSDictionary *allParams;
 @property (assign,nonatomic) NSUInteger lindex;
 @property (strong,nonatomic) UIFont *gio;
 @property NSDictionary *defText;

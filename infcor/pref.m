@@ -42,7 +42,6 @@
     NSString *docsDir = [paths objectAtIndex:0];
     NSArray *dircontents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:docsDir error:nil];
    // NSString *archivePath = [docsDir stringByAppendingPathComponent:@"pref.model"];
-    NSLog(@"docs dir %@",docsDir);
     if([dircontents containsObject:@"pref.model"]) {
         self = [NSKeyedUnarchiver unarchiveObjectWithFile:[docsDir stringByAppendingPathComponent:@"pref.model"]];
     }else{

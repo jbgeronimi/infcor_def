@@ -16,8 +16,11 @@
 @property (strong, nonatomic) NSString *alangue;
 @property (strong,nonatomic) UITableView *afficheMotTableView;
 @property (strong, nonatomic) NSDictionary *params;
+@property (strong,nonatomic) NSDictionary *allParams;
 @property (strong,nonatomic) NSString *searchText;
 @property (strong,nonatomic) UIFont *gio;
 @property (strong, nonatomic) UIScrollView *motView;
 @property UIActivityIndicatorView *spinner;
+@property BOOL willSetFavorite;
+@property BOOL isFavorite;
 @end

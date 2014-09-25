@@ -10,6 +10,10 @@
 		160B5FC019B7369100861E6B /* Klill-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 160B5FBF19B7369100861E6B /* Klill-Light.ttf */; };
 		162A0D9519B351F9007C894B /* contactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 162A0D9419B351F9007C894B /* contactViewController.m */; };
 		162A0D9719B5C204007C894B /* Sansation_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 162A0D9619B5C204007C894B /* Sansation_Regular.ttf */; };
+		163BAF0319D2FC9E00E27EA5 /* favorites.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BAF0219D2FC9E00E27EA5 /* favorites.m */; };
+		163BAF0419D2FC9E00E27EA5 /* favorites.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BAF0219D2FC9E00E27EA5 /* favorites.m */; };
+		163BAF0619D3115A00E27EA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 163BAF0519D3115A00E27EA5 /* Images.xcassets */; };
+		163BAF0719D3115A00E27EA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 163BAF0519D3115A00E27EA5 /* Images.xcassets */; };
 		164D421419AA20810017F82B /* detailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D421319AA20810017F82B /* detailViewController.m */; };
 		166E21D7199FB37800640F55 /* afficheMotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166E21D6199FB37800640F55 /* afficheMotViewController.m */; };
 		1677E45919CF077400C6B619 /* pref.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677E45819CF077400C6B619 /* pref.m */; };
@@ -29,7 +33,6 @@
 		16F7568019814EA200CF9F80 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7567F19814EA200CF9F80 /* AppDelegate.m */; };
 		16F7568319814EA200CF9F80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16F7568119814EA200CF9F80 /* Main.storyboard */; };
 		16F7568619814EA200CF9F80 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7568519814EA200CF9F80 /* ViewController.m */; };
-		16F7568819814EA200CF9F80 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16F7568719814EA200CF9F80 /* Images.xcassets */; };
 		16F7568F19814EA300CF9F80 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16F7568E19814EA300CF9F80 /* XCTest.framework */; };
 		16F7569019814EA300CF9F80 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16F7566F19814EA200CF9F80 /* Foundation.framework */; };
 		16F7569119814EA300CF9F80 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16F7567319814EA200CF9F80 /* UIKit.framework */; };
@@ -56,6 +59,9 @@
 		162A0D9319B351F9007C894B /* contactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = contactViewController.h; sourceTree = "<group>"; };
 		162A0D9419B351F9007C894B /* contactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = contactViewController.m; sourceTree = "<group>"; };
 		162A0D9619B5C204007C894B /* Sansation_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Sansation_Regular.ttf; path = ../../../../../../Calasoc/200909Campusplex/Sansation_Regular.ttf; sourceTree = "<group>"; };
+		163BAF0119D2FC9E00E27EA5 /* favorites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = favorites.h; sourceTree = "<group>"; };
+		163BAF0219D2FC9E00E27EA5 /* favorites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = favorites.m; sourceTree = "<group>"; };
+		163BAF0519D3115A00E27EA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../../../../.Trash/Images.xcassets; sourceTree = "<group>"; };
 		164D421219AA20810017F82B /* detailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailViewController.h; sourceTree = "<group>"; };
 		164D421319AA20810017F82B /* detailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailViewController.m; sourceTree = "<group>"; };
 		166E21D5199FB37800640F55 /* afficheMotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = afficheMotViewController.h; sourceTree = "<group>"; };
@@ -85,7 +91,6 @@
 		16F7568219814EA200CF9F80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		16F7568419814EA200CF9F80 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		16F7568519814EA200CF9F80 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		16F7568719814EA200CF9F80 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		16F7568D19814EA300CF9F80 /* adecec.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = adecec.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		16F7568E19814EA300CF9F80 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16F7569619814EA300CF9F80 /* ADECEC.temp_caseinsensitive_renameTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ADECEC.temp_caseinsensitive_renameTests-Info.plist"; sourceTree = "<group>"; };
@@ -130,6 +135,8 @@
 		1677E45619CF074900C6B619 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				163BAF0119D2FC9E00E27EA5 /* favorites.h */,
+				163BAF0219D2FC9E00E27EA5 /* favorites.m */,
 				1677E45719CF077400C6B619 /* pref.h */,
 				1677E45819CF077400C6B619 /* pref.m */,
 			);
@@ -179,7 +186,7 @@
 				16F7568119814EA200CF9F80 /* Main.storyboard */,
 				16F7568419814EA200CF9F80 /* ViewController.h */,
 				16F7568519814EA200CF9F80 /* ViewController.m */,
-				16F7568719814EA200CF9F80 /* Images.xcassets */,
+				163BAF0519D3115A00E27EA5 /* Images.xcassets */,
 				16F7567619814EA200CF9F80 /* Supporting Files */,
 			);
 			path = infcor;
@@ -224,16 +231,16 @@
 		16F756A4198198F400CF9F80 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				166E21D5199FB37800640F55 /* afficheMotViewController.h */,
+				166E21D6199FB37800640F55 /* afficheMotViewController.m */,
+				162A0D9319B351F9007C894B /* contactViewController.h */,
+				162A0D9419B351F9007C894B /* contactViewController.m */,
+				164D421219AA20810017F82B /* detailViewController.h */,
+				164D421319AA20810017F82B /* detailViewController.m */,
 				16F756A51981990F00CF9F80 /* prefsViewController.h */,
 				16F756A61981990F00CF9F80 /* prefsViewController.m */,
 				16FC7C241984101500CE1C0F /* resultViewController.h */,
 				16FC7C251984101500CE1C0F /* resultViewController.m */,
-				166E21D5199FB37800640F55 /* afficheMotViewController.h */,
-				166E21D6199FB37800640F55 /* afficheMotViewController.m */,
-				164D421219AA20810017F82B /* detailViewController.h */,
-				164D421319AA20810017F82B /* detailViewController.m */,
-				162A0D9319B351F9007C894B /* contactViewController.h */,
-				162A0D9419B351F9007C894B /* contactViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -330,9 +337,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				16C3B830198A3AAF000322E8 /* Giorgio.ttf in Resources */,
+				163BAF0619D3115A00E27EA5 /* Images.xcassets in Resources */,
 				16C3B82A198A352B000322E8 /* CODE Bold.otf in Resources */,
 				160B5FC019B7369100861E6B /* Klill-Light.ttf in Resources */,
-				16F7568819814EA200CF9F80 /* Images.xcassets in Resources */,
 				16C3B832198A3B86000322E8 /* montre fonts in Resources */,
 				16C3B82F198A3AAF000322E8 /* Giorgio-Thin.ttf in Resources */,
 				16F7567A19814EA200CF9F80 /* InfoPlist.strings in Resources */,
@@ -347,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16F7569919814EA300CF9F80 /* InfoPlist.strings in Resources */,
+				163BAF0719D3115A00E27EA5 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				166E21D7199FB37800640F55 /* afficheMotViewController.m in Sources */,
+				163BAF0319D2FC9E00E27EA5 /* favorites.m in Sources */,
 				16F7568619814EA200CF9F80 /* ViewController.m in Sources */,
 				16F756AF19819B1100CF9F80 /* SideTransition.m in Sources */,
 				164D421419AA20810017F82B /* detailViewController.m in Sources */,
@@ -376,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1677E45A19CF077400C6B619 /* pref.m in Sources */,
+				163BAF0419D2FC9E00E27EA5 /* favorites.m in Sources */,
 				16F7569B19814EA300CF9F80 /* infcorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
