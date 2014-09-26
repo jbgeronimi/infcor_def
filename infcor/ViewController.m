@@ -232,7 +232,7 @@
     afficheMotViewController *motVC=[[afficheMotViewController alloc] init];
     motVC.searchText = self.suggest[indexPath.row];
     motVC.alangue = self.alangue;
-    //motVC.params = self.params;
+    motVC.params = self.params;
     motVC.gio = self.gio;
     [self.navigationController pushViewController:motVC animated:YES];
 }
@@ -240,7 +240,7 @@
 //si le mot a ete tape en entier et que "enter" a ete presse -> nouveau tableau avec toutes les possibilités associées au mot
 -(BOOL)enleveClavier {
     resultViewController *risultatiVC=[[resultViewController alloc] init];
-    risultatiVC.params = self.params;
+    //risultatiVC.params = self.params;
     risultatiVC.alangue = self.alangue;
     risultatiVC.searchText = self.searchText.text;
     risultatiVC.title = self.searchText.text;
@@ -287,7 +287,7 @@
 
 - (void)setDefaultValuesForVariables
 {
-    /*NSMutableArray *dbb = [[NSMutableArray alloc] init];
+    NSMutableArray *dbb = [[NSMutableArray alloc] init];
     [dbb addObject:@"FRANCESE" ];
     [dbb addObject:@"DEFINIZIONE"];
     [dbb addObject:@"SINONIMI"];
@@ -307,18 +307,21 @@
                       @"mot_francais":@"id"}];
     [mots addObject:@"DEFINIZIONE"];
     [mots addObject:@"SINONIMI"];
-    self.params = @{
+    NSDictionary *parames = @{
                     @"dbb_query":dbb,
                     @"mot_corse":corsu,
                     @"mot_francais" : fcese,
                     @"affiche_liste":liste,
-                    @"affiche_mot":mots};*/
+                    @"affiche_mot":mots};
     //pref *aPref = [[pref alloc]init];
     pref *aPref = [pref getPref];
-    if(!aPref) {
-        pref *aPref = [[pref alloc] init];
-    }
     self.params = aPref.params;
+    if(!aPref) {
+        pref *aPref = [[pref alloc] initWithParams:parames];
+        NSLog(@"pref %@",aPref.params);
+        self.params = aPref.params;
+        [pref savePref:aPref];
+    }
     self.lindex = 0;
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};
 }
