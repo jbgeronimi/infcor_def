@@ -131,11 +131,11 @@
 
 - (IBAction) goodJob:(id)sender;
 {
-    ViewController *VC = [[ViewController alloc] init];
+    //ViewController *VC = [[ViewController alloc] init];
     pref *aPref = [[pref alloc] init];
     aPref.params= self.params;
     [pref savePref:aPref];
-    VC.params = self.params;
+    //VC.params = self.params;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

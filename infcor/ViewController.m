@@ -55,6 +55,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
+    //[pref getPref];
     //[self.searchText becomeFirstResponder];
 }
 
@@ -231,7 +232,7 @@
     afficheMotViewController *motVC=[[afficheMotViewController alloc] init];
     motVC.searchText = self.suggest[indexPath.row];
     motVC.alangue = self.alangue;
-    motVC.params = self.params;
+    //motVC.params = self.params;
     motVC.gio = self.gio;
     [self.navigationController pushViewController:motVC animated:YES];
 }
@@ -312,7 +313,11 @@
                     @"mot_francais" : fcese,
                     @"affiche_liste":liste,
                     @"affiche_mot":mots};*/
-    pref *aPref = [[pref alloc] init];
+    //pref *aPref = [[pref alloc]init];
+    pref *aPref = [pref getPref];
+    if(!aPref) {
+        pref *aPref = [[pref alloc] init];
+    }
     self.params = aPref.params;
     self.lindex = 0;
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};

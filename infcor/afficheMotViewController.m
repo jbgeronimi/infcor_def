@@ -7,6 +7,7 @@
 //
 
 #import "afficheMotViewController.h"
+#import "pref.h"
 
 @interface afficheMotViewController ()
 
@@ -44,6 +45,8 @@
     self.afficheMotTableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
 
+    pref *aPref = [pref getPref];
+    self.params = aPref.params;
     NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[self.params[@"dbb_query"] componentsJoinedByString:@" "] ];
    // if([self.alangue isEqualToString:@"mot_francais"]){[self.params[@"dbb_query"] insertObject:@"id" atIndex:0 ];}
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
