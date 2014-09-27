@@ -112,7 +112,7 @@
     NSURL *cerca = [[NSURL alloc] initWithString:cercaURL];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:cerca];
     // Requete ASynchrone
-    favorites *aFavorite = [favorites getFav];
+    
 
     __block NSMutableArray *json;
     [NSURLConnection sendAsynchronousRequest:request
@@ -124,6 +124,7 @@
                                NSDictionary *tmpJson = json[0];
                                NSString *unique  = [tmpJson valueForKey:@"id"];
                                NSMutableDictionary *muTemp = [[NSMutableDictionary alloc] init];
+                               favorites *aFavorite = [favorites getFav];
                                muTemp = aFavorite.favList;
                                [muTemp setObject:tmpJson forKey:unique];
                                aFavorite.favList = muTemp ;
