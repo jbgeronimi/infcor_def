@@ -48,7 +48,6 @@
     pref *aPref = [pref getPref];
     self.params = aPref.params;
     NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[self.params[@"dbb_query"] componentsJoinedByString:@" "] ];
-   // if([self.alangue isEqualToString:@"mot_francais"]){[self.params[@"dbb_query"] insertObject:@"id" atIndex:0 ];}
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *cerca = [NSURL URLWithString:cercaURL];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:cerca];
@@ -156,7 +155,7 @@
     CGRect tailleCell = [leTexte boundingRectWithSize:maxCell
                                               options:NSStringDrawingUsesLineFragmentOrigin
                                               context:nil];
-    return tailleCell.size.height + MAX(35,tailleCell.size.height / 20);
+    return tailleCell.size.height + MAX(30,tailleCell.size.height / 20);
 }
 
 @end
