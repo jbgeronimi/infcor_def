@@ -124,7 +124,8 @@
                                NSDictionary *tmpJson = json[0];
                                NSString *unique  = [tmpJson valueForKey:@"id"];
                                NSMutableDictionary *muTemp = [[NSMutableDictionary alloc] init];
-                               favorites *aFavorite = [favorites getFav];
+                               favorites *aFavorite = [[favorites alloc] init];
+                               [favorites getFav];
                                muTemp = aFavorite.favList;
                                [muTemp setObject:tmpJson forKey:unique];
                                aFavorite.favList = muTemp ;
