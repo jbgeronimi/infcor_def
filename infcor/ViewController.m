@@ -225,7 +225,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+   	//[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //cas ou on selectionne la suggestion -> definition du mot direct
     afficheMotViewController *motVC=[[afficheMotViewController alloc] init];
@@ -247,7 +247,7 @@
     risultatiVC.title = self.searchText.text;
     risultatiVC.gio = self.gio;
     if (risultatiVC.searchText.length > 1){
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self.navigationController pushViewController:risultatiVC animated:YES];
     }
     [self.searchText resignFirstResponder];

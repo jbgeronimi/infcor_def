@@ -16,21 +16,12 @@
 @implementation afficheMotViewController
 
 -(void)viewWillAppear:(BOOL)animated {
-    //il faut checker que le mot appartient aux favoris
-    favorites *aFav = [favorites getFav];
-    if([aFav.favList objectForKey:self.searchText]){
-        self.isFavorite = YES;}
-    //une etoile de favoris dans la barre de Nav
-    UIBarButtonItem *stella=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stella"] style:UIBarButtonItemStyleDone target:self action:@selector(cambiaStella:)];
-    if(self.isFavorite){
-        stella.tintColor = [UIColor colorWithWhite:1 alpha:1];
-    }else {
-        stella.tintColor = [UIColor colorWithWhite:.99 alpha:.45];
-    }
-    self.navigationItem.rightBarButtonItem = stella;
     [self.navigationController setNavigationBarHidden:NO];
+    //une etoile de favoris dans la barre de Nav
+    self.stella=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stella"] style:UIBarButtonItemStyleDone target:self action:@selector(cambiaStella:)];
+    [self showStella];
     //Ajout d'un spinner d'attente
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.spinner.frame = [[UIScreen mainScreen] bounds];
     self.spinner.center = CGPointMake( self.view.frame.size.width /2,(self.view.frame.size.height / 2) - 64);
@@ -38,6 +29,15 @@
     [self.spinner startAnimating];
     [self.view addSubview:self.spinner];}
 
+-(void)showStella{
+    if(self.isFavorite){
+        self.stella.tintColor = [UIColor colorWithWhite:1 alpha:1];
+    }else {
+        self.stella.tintColor = [UIColor colorWithWhite:.99 alpha:.45];
+    }
+    self.navigationItem.rightBarButtonItem = self.stella;
+    //return self.stella;
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -87,24 +87,32 @@
     self.risultati = json;
     //NSLog(@"risultati %@",self.risultati);
     self.title = self.searchText;
+    //il faut checker que le mot appartient aux favoris
+    favorites *aFav = [favorites getFav];
+    if([aFav.favList objectForKey:[self.risultati[0] objectForKey:@"id"]]){
+        self.isFavorite = YES;}
+    [self showStella];
     [self.tableView reloadData];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.spinner stopAnimating];
 }
+
 //la fonction de gestion de l'etoile
 -(void)cambiaStella:(id)sender{
-    if(!self.willSetFavorite){
-        [self addFavorite:self.searchText];}
+    if(!(self.willSetFavorite | self.isFavorite)){
+        [self addFavorite];}
     if(self.isFavorite){
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithWhite:1 alpha:.45];
+        [self removeFavorite];
         self.isFavorite = NO;
     }else{
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithWhite:1 alpha:1];
         self.isFavorite = YES;
     }
 }
+
 //la fonction d'ajout des favoris
--(void)addFavorite:(NSString *)mot{
+-(void)addFavorite{
     self.willSetFavorite = TRUE;
     NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[self.allParams[@"dbb_query"] componentsJoinedByString:@" "] ];
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -112,8 +120,11 @@
     NSURL *cerca = [[NSURL alloc] initWithString:cercaURL];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:cerca];
     // Requete ASynchrone
-    
-
+    favorites *aFavorite = [[favorites alloc] init];
+    aFavorite = [favorites getFav];
+    if(!aFavorite){ aFavorite.favList = [[NSMutableDictionary alloc] init];
+        [aFavorite.favList setObject:@"x" forKey:@"y"];
+        NSLog(@"jhgjhk");}
     __block NSMutableArray *json;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
@@ -123,17 +134,23 @@
                                                                                    error:nil];}
                                NSDictionary *tmpJson = json[0];
                                NSString *unique  = [tmpJson valueForKey:@"id"];
-                               NSMutableDictionary *muTemp = [[NSMutableDictionary alloc] init];
-                               favorites *aFavorite = [[favorites alloc] init];
-                               [favorites getFav];
-                               muTemp = aFavorite.favList;
-                               [muTemp setObject:tmpJson forKey:unique];
-                               aFavorite.favList = muTemp ;
-            NSLog(@"afav %@",aFavorite.favList);
-                         [favorites saveFav:aFavorite];
+                               [aFavorite.favList setObject:tmpJson forKey:unique];
+                               //aFavorite.favList = muTemp ;
+                              // NSLog(@"afav %@",aFavorite.favList);
+                               [favorites saveFav:aFavorite];
                          }];
+    self.isFavorite = YES;
 }
-     
+
+//la fonction d'effacement du favoris
+-(void)removeFavorite{
+    favorites *aFavorite = [favorites getFav];
+    [aFavorite.favList removeObjectForKey:[self.risultati[0] objectForKey:@"id"]];
+    NSLog(@"risultati %@",[self.risultati[0] objectForKey:@"id"]);
+    self.isFavorite = NO;
+    [favorites saveFav:aFavorite];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -141,7 +158,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.afficheMotTableView reloadData];
 }
 #pragma mark - Table view data source

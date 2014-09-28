@@ -23,4 +23,5 @@
 @property UIActivityIndicatorView *spinner;
 @property BOOL willSetFavorite;
 @property BOOL isFavorite;
+@property UIBarButtonItem *stella;
 @end

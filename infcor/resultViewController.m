@@ -20,7 +20,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO];
 //Ajout d'un spinner d'attente
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.spinner.frame = [[UIScreen mainScreen] bounds];
     self.spinner.center = CGPointMake( self.view.frame.size.width /2,(self.view.frame.size.height / 2) - 64);
@@ -87,7 +87,7 @@
                                                              error:nil];
     self.risultati = json;
     [self.tableView reloadData];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.spinner stopAnimating];
     //Un message d'alerte si pas de résultat
     if (self.risultati.count == 0){
@@ -164,7 +164,7 @@
 -(void) viewDidAppear:(BOOL)animated{
     [self.resultTableView reloadData];
     if(self.risultati){
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [self.spinner stopAnimating];}
 //    [super viewDidAppear:animated];
 }
