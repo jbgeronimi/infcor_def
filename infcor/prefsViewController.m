@@ -42,14 +42,12 @@
 {
     [super viewDidLoad];
     self.allParams = @{
-       @"dbb_query":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
-     @"affiche_mot":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
-           @"mot_corse": @[@"Talianu",@"Inglese",@"Natura",@"Prununzia",@"Definizione",@"Etimulugia",@"Grammatica",@"Variante",@"Sinonimi",@"Antonimi",@"Derivati Cumposti",@"Spressioni è Pruverbii",@"Analugie",@"Citazioni dà Autori",@"Bibliografia",@"Indice"],
-       @"mot_francais" : @[@"Italien",@"Anglais",@"Genre",@"Prononciation",@"Définition en Corse",@"Etymologie",@"Grammaire",@"Variantes Graphiques",@"Synonymes",@"Antonymes",@"Dérivés Composés",@"Expressions et Proverbes",@"Analogies",@"Citations d'Auteurs",@"Bibliographie",@"Indice"]
-                    };
-    //self.params = [pref getPref].params;
-    pref *aPref = [pref getPref];
-    self.params = aPref.params;
+                       @"dbb_query":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
+                       @"affiche_mot":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
+                       @"mot_corse": @[@"Talianu",@"Inglese",@"Natura",@"Prununzia",@"Definizione",@"Etimulugia",@"Grammatica",@"Variante",@"Sinonimi",@"Antonimi",@"Derivati Cumposti",@"Spressioni è Pruverbii",@"Analugie",@"Citazioni dà Autori",@"Bibliografia",@"Indice"],
+                       @"mot_francais" : @[@"Italien",@"Anglais",@"Genre",@"Prononciation",@"Définition en Corse",@"Etymologie",@"Grammaire",@"Variantes Graphiques",@"Synonymes",@"Antonymes",@"Dérivés Composés",@"Expressions et Proverbes",@"Analogies",@"Citations d'Auteurs",@"Bibliographie",@"Indice"]
+                       };
+    self.params = [pref getPref].params;
     // un tableau avec tous les elements de params
     self.afficheParams=[[UITableView alloc] init];
     self.afficheParams.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -65,7 +63,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     /*self.view.layer.borderColor = [UIColor blackColor].CGColor;
-    self.view.layer.borderWidth = 2.0f;*/
+     self.view.layer.borderWidth = 2.0f;*/
     UIButton *vabe = [UIButton buttonWithType:UIButtonTypeSystem];
     vabe.backgroundColor = [UIColor whiteColor];
     vabe.tintColor = [UIColor blackColor];
@@ -118,10 +116,10 @@
     }
     if (!switchControl.isOn){
         if ([self.params[self.alangue] containsObject:self.allParams[self.alangue][switchControl.tag]]){
-        [self.params[@"dbb_query"] removeObject:self.allParams[@"dbb_query"][switchControl.tag]];
-        [self.params[@"affiche_mot"] removeObject:self.allParams[@"affiche_mot"][switchControl.tag]];
-        [self.params[@"mot_corse"] removeObject:self.allParams[@"mot_corse"][switchControl.tag]];
-        [self.params[@"mot_francais"] removeObject:self.allParams[@"mot_francais"][switchControl.tag]];
+            [self.params[@"dbb_query"] removeObject:self.allParams[@"dbb_query"][switchControl.tag]];
+            [self.params[@"affiche_mot"] removeObject:self.allParams[@"affiche_mot"][switchControl.tag]];
+            [self.params[@"mot_corse"] removeObject:self.allParams[@"mot_corse"][switchControl.tag]];
+            [self.params[@"mot_francais"] removeObject:self.allParams[@"mot_francais"][switchControl.tag]];
         }
     }
     if(switchControl.on){
@@ -131,12 +129,11 @@
 
 - (IBAction) goodJob:(id)sender;
 {
-    ViewController *VC = [[ViewController alloc] init];
+    //ViewController *VC = [[ViewController alloc] init];
     pref *aPref = [[pref alloc] init];
     aPref.params= self.params;
     [pref savePref:aPref];
-    VC.params = self.params;
-   // VC.allParams = self.allParams;
+    //VC.params = self.params;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
