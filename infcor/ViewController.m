@@ -55,6 +55,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
+    //[pref getPref];
     //[self.searchText becomeFirstResponder];
 }
 
@@ -71,7 +72,7 @@
     self.view.autoresizesSubviews = YES;
     self.view.backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];
     self.gio = [UIFont fontWithName:@"Klill" size:20];
-   // je cree une vue pour le fond bleu
+    // je cree une vue pour le fond bleu
     UIView *lefond = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 115)];
     [lefond setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     lefond.backgroundColor = [UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000];
@@ -96,7 +97,7 @@
     self.primu.imageEdgeInsets = UIEdgeInsetsMake(0, self.primu.frame.size.width - 50 , 0, 0);
     [self.primu setTitle:langInit forState:UIControlStateNormal];
     [self.primu setTitleEdgeInsets:UIEdgeInsetsMake(0, 25 - (self.primu.frame.size.width /2) , 0, 0)];
-   // NSLog(@"frame image %f",self.primu.imageView.frame.size.width);
+    // NSLog(@"frame image %f",self.primu.imageView.frame.size.width);
     [self.primu addTarget:self
                    action:@selector(changeLanguage:)
          forControlEvents:UIControlEventTouchUpInside];
@@ -137,14 +138,14 @@
     self.searchText.returnKeyType = UIReturnKeySearch;
     //on interroge la base a chaque lettre tapée (editingChanged)
     [self.searchText addTarget:self
-                  action:@selector(editingChanged:)
-        forControlEvents:UIControlEventEditingChanged];
+                        action:@selector(editingChanged:)
+              forControlEvents:UIControlEventEditingChanged];
     self.searchText.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.searchText];
     //on range le clavier
     [self.searchText addTarget:self
-                  action:@selector(enleveClavier)
-        forControlEvents:UIControlEventEditingDidEndOnExit];
+                        action:@selector(enleveClavier)
+              forControlEvents:UIControlEventEditingDidEndOnExit];
     
     //un tableau avec les suggestions
     self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, 115, self.view.frame.size.width - 60, self.view.frame.size.height - 115)];
@@ -177,16 +178,16 @@
     NSURL *cercaURL = [[NSURL alloc] initWithString:cercaString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:cercaURL];
     // Requete ASynchrone
-       __block NSMutableArray *json;
-     [NSURLConnection sendAsynchronousRequest:request
-     queue:[NSOperationQueue mainQueue]
-     completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-         if (data) {json = [NSJSONSerialization JSONObjectWithData:data
-                                                           options:0
-                                                             error:nil];}
-     self.suggest = json;
-     [self.suggestTableView reloadData];
-     }];
+    __block NSMutableArray *json;
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                               if (data) {json = [NSJSONSerialization JSONObjectWithData:data
+                                                                                 options:0
+                                                                                   error:nil];}
+                               self.suggest = json;
+                               [self.suggestTableView reloadData];
+                           }];
 }
 
 //Une Table pour les suggestions
@@ -232,7 +233,6 @@
     motVC.searchText = self.suggest[indexPath.row];
     motVC.alangue = self.alangue;
     motVC.params = self.params;
-    motVC.allParams = self.allParams;
     motVC.gio = self.gio;
     [self.navigationController pushViewController:motVC animated:YES];
 }
@@ -240,8 +240,7 @@
 //si le mot a ete tape en entier et que "enter" a ete presse -> nouveau tableau avec toutes les possibilités associées au mot
 -(BOOL)enleveClavier {
     resultViewController *risultatiVC=[[resultViewController alloc] init];
-    risultatiVC.params = self.params;
-    risultatiVC.allParams = self.allParams;
+    //risultatiVC.params = self.params;
     risultatiVC.alangue = self.alangue;
     risultatiVC.searchText = self.searchText.text;
     risultatiVC.title = self.searchText.text;
@@ -254,7 +253,7 @@
     CGRect newTable = self.suggestTableView.frame;
     newTable.size.height = self.view.frame.size.height - 115;
     self.suggestTableView.frame = newTable;
-  return YES;
+    return YES;
 }
 
 //redimensionnement des suggestions en fonction de la taille du clavier
@@ -276,9 +275,9 @@
     if ([sender.titleLabel.text isEqualToString:@"Corsu \u2192 Francese"]){
         [self.primu setTitle:@"Français \u2192 Corse" forState:UIControlStateNormal];
         self.alangue = @"mot_francais";
-            }else {
-            [self.primu setTitle:@"Corsu \u2192 Francese" forState:UIControlStateNormal];
-            self.alangue = @"mot_corse";
+    }else {
+        [self.primu setTitle:@"Corsu \u2192 Francese" forState:UIControlStateNormal];
+        self.alangue = @"mot_corse";
     }
     self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
     //on a change la langue, il faut refaire une requete
@@ -288,13 +287,7 @@
 
 - (void)setDefaultValuesForVariables
 {
-    self.allParams = @{
-                       @"dbb_query":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
-                       @"affiche_mot":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
-                       @"mot_corse": @[@"Talianu",@"Inglese",@"Natura",@"Prununzia",@"Definizione",@"Etimulugia",@"Grammatica",@"Variante",@"Sinonimi",@"Antonimi",@"Derivati Cumposti",@"Spressioni è Pruverbii",@"Analugie",@"Citazioni dà Autori",@"Bibliografia",@"Indice"],
-                       @"mot_francais" : @[@"Italien",@"Anglais",@"Genre",@"Prononciation",@"Définition en Corse",@"Etymologie",@"Grammaire",@"Variantes Graphiques",@"Synonymes",@"Antonymes",@"Dérivés Composés",@"Expressions et Proverbes",@"Analogies",@"Citations d'Auteurs",@"Bibliographie",@"Indice"]
-                       };
-    /*NSMutableArray *dbb = [[NSMutableArray alloc] init];
+    NSMutableArray *dbb = [[NSMutableArray alloc] init];
     [dbb addObject:@"FRANCESE" ];
     [dbb addObject:@"DEFINIZIONE"];
     [dbb addObject:@"SINONIMI"];
@@ -308,20 +301,27 @@
     [fcese addObject:@"Synonymes"];
     NSMutableArray *liste = [[NSMutableArray alloc] init];
     [liste addObject:@{@"mot_corse":@"id",
-        @"mot_francais":@"FRANCESE"}];
+                       @"mot_francais":@"FRANCESE"}];
     NSMutableArray *mots = [[NSMutableArray alloc] init];
     [mots addObject:@{@"mot_corse":@"FRANCESE",
                       @"mot_francais":@"id"}];
     [mots addObject:@"DEFINIZIONE"];
     [mots addObject:@"SINONIMI"];
-    self.params = @{
-                    @"dbb_query":dbb,
-                    @"mot_corse":corsu,
-                    @"mot_francais" : fcese,
-                    @"affiche_liste":liste,
-                    @"affiche_mot":mots};*/
-    pref *aPref = [[pref alloc] init];
+    NSDictionary *parames = @{
+                              @"dbb_query":dbb,
+                              @"mot_corse":corsu,
+                              @"mot_francais" : fcese,
+                              @"affiche_liste":liste,
+                              @"affiche_mot":mots};
+    //pref *aPref = [[pref alloc]init];
+    pref *aPref = [pref getPref];
     self.params = aPref.params;
+    if(!aPref) {
+        pref *aPref = [[pref alloc] initWithParams:parames];
+        NSLog(@"pref %@",aPref.params);
+        self.params = aPref.params;
+        [pref savePref:aPref];
+    }
     self.lindex = 0;
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};
 }
