@@ -8,6 +8,7 @@
 
 #import "afficheMotViewController.h"
 #import "favorites.h"
+#import "pref.h"
 
 @interface afficheMotViewController ()
 
@@ -16,6 +17,8 @@
 @implementation afficheMotViewController
 
 -(void)viewWillAppear:(BOOL)animated {
+    pref *aPref = [pref getPref];
+    self.params = aPref.params;
     [self.navigationController setNavigationBarHidden:NO];
     //une etoile de favoris dans la barre de Nav
     self.stella=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stella"] style:UIBarButtonItemStyleDone target:self action:@selector(cambiaStella:)];

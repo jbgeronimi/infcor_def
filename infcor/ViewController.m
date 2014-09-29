@@ -55,7 +55,6 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
-    //[pref getPref];
     //[self.searchText becomeFirstResponder];
 }
 
@@ -240,7 +239,7 @@
 //si le mot a ete tape en entier et que "enter" a ete presse -> nouveau tableau avec toutes les possibilités associées au mot
 -(BOOL)enleveClavier {
     resultViewController *risultatiVC=[[resultViewController alloc] init];
-    //risultatiVC.params = self.params;
+    risultatiVC.params = self.params;
     risultatiVC.alangue = self.alangue;
     risultatiVC.searchText = self.searchText.text;
     risultatiVC.title = self.searchText.text;
@@ -316,9 +315,9 @@
     //pref *aPref = [[pref alloc]init];
     pref *aPref = [pref getPref];
     self.params = aPref.params;
+        NSLog(@"pref %@",aPref.params);
     if(!aPref) {
         pref *aPref = [[pref alloc] initWithParams:parames];
-        NSLog(@"pref %@",aPref.params);
         self.params = aPref.params;
         [pref savePref:aPref];
     }
