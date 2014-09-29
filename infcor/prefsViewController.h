@@ -14,6 +14,6 @@
 @property (strong,nonatomic) UITableView *afficheParams;
 @property NSIndexPath *lindex;
 @property (strong, nonatomic) NSString  *alangue;
-@property  NSDictionary *params;
+@property (strong,nonatomic) NSDictionary *params;
 @property (strong,nonatomic) NSDictionary *allParams;
 @end
