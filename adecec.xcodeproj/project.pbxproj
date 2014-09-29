@@ -8,12 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		160B5FC019B7369100861E6B /* Klill-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 160B5FBF19B7369100861E6B /* Klill-Light.ttf */; };
+		1618DE0F19D95B4200D827C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1618DE0E19D95B4200D827C6 /* Images.xcassets */; };
 		162A0D9519B351F9007C894B /* contactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 162A0D9419B351F9007C894B /* contactViewController.m */; };
 		162A0D9719B5C204007C894B /* Sansation_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 162A0D9619B5C204007C894B /* Sansation_Regular.ttf */; };
 		163BAF0319D2FC9E00E27EA5 /* favorites.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BAF0219D2FC9E00E27EA5 /* favorites.m */; };
 		163BAF0419D2FC9E00E27EA5 /* favorites.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BAF0219D2FC9E00E27EA5 /* favorites.m */; };
-		163BAF0619D3115A00E27EA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 163BAF0519D3115A00E27EA5 /* Images.xcassets */; };
-		163BAF0719D3115A00E27EA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 163BAF0519D3115A00E27EA5 /* Images.xcassets */; };
 		164D421419AA20810017F82B /* detailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D421319AA20810017F82B /* detailViewController.m */; };
 		166E21D7199FB37800640F55 /* afficheMotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166E21D6199FB37800640F55 /* afficheMotViewController.m */; };
 		1677E45919CF077400C6B619 /* pref.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677E45819CF077400C6B619 /* pref.m */; };
@@ -56,12 +55,12 @@
 
 /* Begin PBXFileReference section */
 		160B5FBF19B7369100861E6B /* Klill-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Klill-Light.ttf"; path = "../../../../../../GFO/200705/Fontes/klill/Klill-Light.ttf"; sourceTree = "<group>"; };
+		1618DE0E19D95B4200D827C6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		162A0D9319B351F9007C894B /* contactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = contactViewController.h; sourceTree = "<group>"; };
 		162A0D9419B351F9007C894B /* contactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = contactViewController.m; sourceTree = "<group>"; };
 		162A0D9619B5C204007C894B /* Sansation_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Sansation_Regular.ttf; path = ../../../../../../Calasoc/200909Campusplex/Sansation_Regular.ttf; sourceTree = "<group>"; };
 		163BAF0119D2FC9E00E27EA5 /* favorites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = favorites.h; sourceTree = "<group>"; };
 		163BAF0219D2FC9E00E27EA5 /* favorites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = favorites.m; sourceTree = "<group>"; };
-		163BAF0519D3115A00E27EA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../../../../.Trash/Images.xcassets; sourceTree = "<group>"; };
 		164D421219AA20810017F82B /* detailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailViewController.h; sourceTree = "<group>"; };
 		164D421319AA20810017F82B /* detailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailViewController.m; sourceTree = "<group>"; };
 		166E21D5199FB37800640F55 /* afficheMotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = afficheMotViewController.h; sourceTree = "<group>"; };
@@ -186,7 +185,7 @@
 				16F7568119814EA200CF9F80 /* Main.storyboard */,
 				16F7568419814EA200CF9F80 /* ViewController.h */,
 				16F7568519814EA200CF9F80 /* ViewController.m */,
-				163BAF0519D3115A00E27EA5 /* Images.xcassets */,
+				1618DE0E19D95B4200D827C6 /* Images.xcassets */,
 				16F7567619814EA200CF9F80 /* Supporting Files */,
 			);
 			path = infcor;
@@ -337,9 +336,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				16C3B830198A3AAF000322E8 /* Giorgio.ttf in Resources */,
-				163BAF0619D3115A00E27EA5 /* Images.xcassets in Resources */,
 				16C3B82A198A352B000322E8 /* CODE Bold.otf in Resources */,
 				160B5FC019B7369100861E6B /* Klill-Light.ttf in Resources */,
+				1618DE0F19D95B4200D827C6 /* Images.xcassets in Resources */,
 				16C3B832198A3B86000322E8 /* montre fonts in Resources */,
 				16C3B82F198A3AAF000322E8 /* Giorgio-Thin.ttf in Resources */,
 				16F7567A19814EA200CF9F80 /* InfoPlist.strings in Resources */,
@@ -354,7 +353,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				16F7569919814EA300CF9F80 /* InfoPlist.strings in Resources */,
-				163BAF0719D3115A00E27EA5 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

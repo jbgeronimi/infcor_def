@@ -92,6 +92,7 @@
     if([aFav.favList objectForKey:[self.risultati[0] objectForKey:@"id"]]){
         self.isFavorite = YES;}
     [self showStella];
+    NSLog(@"condition %@, risul %@",[aFav.favList objectForKey:[self.risultati[0] objectForKey:@"id"]], [self.risultati[0] objectForKey:@"id"]);
     [self.tableView reloadData];
     //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.spinner stopAnimating];
@@ -102,12 +103,12 @@
     if(!(self.willSetFavorite | self.isFavorite)){
         [self addFavorite];}
     if(self.isFavorite){
-        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithWhite:1 alpha:.45];
         [self removeFavorite];
         self.isFavorite = NO;
+        [self showStella];
     }else{
-        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithWhite:1 alpha:1];
         self.isFavorite = YES;
+        [self showStella];
     }
 }
 
@@ -139,7 +140,7 @@
                               // NSLog(@"afav %@",aFavorite.favList);
                                [favorites saveFav:aFavorite];
                          }];
-    self.isFavorite = YES;
+    //self.isFavorite = YES;
 }
 
 //la fonction d'effacement du favoris
