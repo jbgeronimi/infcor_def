@@ -151,7 +151,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
             endingLineNumber = "117"
-            landmarkName = "-addFavorite:"
+            landmarkName = "-addFavorite"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -167,7 +167,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "141"
             endingLineNumber = "141"
-            landmarkName = "-addFavorite:"
+            landmarkName = "-addFavorite"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -183,8 +183,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "99"
             endingLineNumber = "99"
-            landmarkName = "-cambiaStella:"
-            landmarkType = "5">
+            landmarkName = "@implementation afficheMotViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -215,7 +215,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "126"
             endingLineNumber = "126"
-            landmarkName = "-addFavorite:"
+            landmarkName = "-addFavorite"
             landmarkType = "5">
             <Locations>
                <Location
@@ -275,7 +275,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
             endingLineNumber = "149"
-            landmarkName = "-removeFavorite:"
+            landmarkName = "-removeFavorite"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
