@@ -7,19 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "langue.h"
+#import "params.h"
 
 @interface ViewController : UIViewController <UIViewControllerTransitioningDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (strong,nonatomic) UIButton *primu;
-@property (strong,nonatomic) NSString *alangue;
+//@property (strong,nonatomic) NSString *alangue;
 @property (strong,nonatomic) UITextField *searchText;
 @property (strong,nonatomic) NSURL *searchURL;
 @property (strong,nonatomic) NSMutableArray *suggest;
 @property (retain,nonatomic) UITableView *suggestTableView;
-@property  NSDictionary *params;
+//@property  NSDictionary *params;
 @property (strong,nonatomic) NSDictionary *allParams;
 @property (assign,nonatomic) NSUInteger lindex;
 @property (strong,nonatomic) UIFont *gio;
 @property NSDictionary *defText;
+@property (strong,nonatomic) params *aParam;
 @end

@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 ___calasoc___. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "ViewController.h"
 #import "prefsViewController.h"
 #import "SideDismissalTransition.h"
@@ -13,6 +14,8 @@
 #import "AppDelegate.h"
 #import "resultViewController.h"
 #import "afficheMotViewController.h"
+#import "favoritesTableViewController.h"
+#import "params.h"
 #import "pref.h"
 
 @interface ViewController ()
@@ -31,7 +34,7 @@
 }
 
 // Present the prefsViewController as a modal
-- (void) preferences:(id)sender{
+/*- (void) preferences:(id)sender{
     
     prefsViewController *prefsVC = [[prefsViewController alloc] init];
     
@@ -41,7 +44,7 @@
     prefsVC.params = self.params;
     
     [self presentViewController:prefsVC animated:YES completion:nil];
-}
+}*/
 
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
@@ -61,13 +64,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //customisation de la barre de nav
+   //customisation de la barre de nav
     [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                             NSForegroundColorAttributeName: [UIColor whiteColor],
                                                             NSFontAttributeName: [UIFont fontWithName:@"Code-BOLD" size:17.0f]
                                                             }];
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000]];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    self.tabBarController.tabBar.backgroundColor = [UIColor blackColor];
+
     self.view.autoresizesSubviews = YES;
     self.view.backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];
     self.gio = [UIFont fontWithName:@"Klill" size:20];
@@ -84,7 +89,6 @@
     
     UIFont *titre = [UIFont fontWithName:@"Sansation" size:20];
     NSString *langInit = @"Corsu \u2192 Francese";
-    self.alangue = @"mot_corse";
     //corsu - francese ou  francais-corse
     self.primu = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.primu.frame = CGRectMake(55,21, self.view.frame.size.width - 100, 42);
@@ -103,7 +107,7 @@
     self.primu.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
     [self.view addSubview:self.primu];
     
-    
+    /*
     //le bouton d'acces aux preferences
     UIButton *prefBouton = [UIButton buttonWithType:UIButtonTypeSystem] ;
     prefBouton.tintColor = [UIColor colorWithWhite:.9 alpha:1];
@@ -114,11 +118,11 @@
                    action:@selector(preferences:)
          forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:prefBouton];
-    
+    */
     //la zone de saisie du texte, le texte par defaut  et son bouton d'effacement
     self.searchText = [[UITextField alloc] initWithFrame:CGRectMake(30, 64, self.view.frame.size.width - 60, 39)];
     //le texte par defaut
-    self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
+    self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.aParam.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
     [self.searchText setBorderStyle:UITextBorderStyleRoundedRect];
     //le bouton d'effacement
     UIButton *effaceBouton= [UIButton buttonWithType:UIButtonTypeCustom];
@@ -173,7 +177,7 @@
 }
 
 -(void)editingChanged:(id)sender {
-    NSString *cercaString = [NSString stringWithFormat:@"http://adecec.net/infcor/try/suggestion.php?mot=%@&langue=%@", self.searchText.text, self.alangue];
+    NSString *cercaString = [NSString stringWithFormat:@"http://adecec.net/infcor/try/suggestion.php?mot=%@&langue=%@", self.searchText.text, self.aParam.alangue];
     NSURL *cercaURL = [[NSURL alloc] initWithString:cercaString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:cercaURL];
     // Requete ASynchrone
@@ -230,8 +234,8 @@
     //cas ou on selectionne la suggestion -> definition du mot direct
     afficheMotViewController *motVC=[[afficheMotViewController alloc] init];
     motVC.searchText = self.suggest[indexPath.row];
-    motVC.alangue = self.alangue;
-    motVC.params = self.params;
+    motVC.alangue = self.aParam.alangue;
+    motVC.params = self.aParam.parametres;
     motVC.gio = self.gio;
     [self.navigationController pushViewController:motVC animated:YES];
 }
@@ -239,8 +243,8 @@
 //si le mot a ete tape en entier et que "enter" a ete presse -> nouveau tableau avec toutes les possibilités associées au mot
 -(BOOL)enleveClavier {
     resultViewController *risultatiVC=[[resultViewController alloc] init];
-    risultatiVC.params = self.params;
-    risultatiVC.alangue = self.alangue;
+    risultatiVC.params = self.aParam.parametres;
+    risultatiVC.alangue = self.aParam.alangue;
     risultatiVC.searchText = self.searchText.text;
     risultatiVC.title = self.searchText.text;
     risultatiVC.gio = self.gio;
@@ -273,12 +277,12 @@
 - (void)changeLanguage:(UIButton *) sender {
     if ([sender.titleLabel.text isEqualToString:@"Corsu \u2192 Francese"]){
         [self.primu setTitle:@"Français \u2192 Corse" forState:UIControlStateNormal];
-        self.alangue = @"mot_francais";
+        self.aParam.alangue = @"mot_francais";
     }else {
         [self.primu setTitle:@"Corsu \u2192 Francese" forState:UIControlStateNormal];
-        self.alangue = @"mot_corse";
+        self.aParam.alangue = @"mot_corse";
     }
-    self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
+    self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.aParam.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
     //on a change la langue, il faut refaire une requete
     [self editingChanged:self.searchText.text];
     [self.suggestTableView reloadData];
@@ -286,7 +290,7 @@
 
 - (void)setDefaultValuesForVariables
 {
-    NSMutableArray *dbb = [[NSMutableArray alloc] init];
+   /* NSMutableArray *dbb = [[NSMutableArray alloc] init];
     [dbb addObject:@"FRANCESE" ];
     [dbb addObject:@"DEFINIZIONE"];
     [dbb addObject:@"SINONIMI"];
@@ -311,16 +315,19 @@
                               @"mot_corse":corsu,
                               @"mot_francais" : fcese,
                               @"affiche_liste":liste,
-                              @"affiche_mot":mots};
+                              @"affiche_mot":mots};*/
     //pref *aPref = [[pref alloc]init];
+    self.aParam = [[params alloc] init];
     pref *aPref = [pref getPref];
-    self.params = aPref.params;
+    self.aParam.parametres = aPref.params;
         NSLog(@"pref %@",aPref.params);
     if(!aPref) {
-        pref *aPref = [[pref alloc] initWithParams:parames];
-        self.params = aPref.params;
+        pref *aPref = [[pref alloc] initWithParams:self.aParam.parametres];
+        self.aParam.parametres = aPref.params;
         [pref savePref:aPref];
     }
+    self.aParam.alangue = @"mot_corse";
+    self.aParam.alangue = self.aParam.alangue;
     self.lindex = 0;
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};
 }
@@ -330,5 +337,6 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
+   // self.aParam.alangue = self.alangue;
 }
 @end

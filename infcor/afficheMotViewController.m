@@ -23,15 +23,8 @@
     //une etoile de favoris dans la barre de Nav
     self.stella=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stella"] style:UIBarButtonItemStyleDone target:self action:@selector(cambiaStella:)];
     [self showStella];
-    //Ajout d'un spinner d'attente
-    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    self.spinner.frame = [[UIScreen mainScreen] bounds];
-    self.spinner.center = CGPointMake( self.view.frame.size.width /2,(self.view.frame.size.height / 2) - 64);
-    self.spinner.color = [UIColor blackColor];
-    [self.spinner startAnimating];
-    [self.view addSubview:self.spinner];}
-
+ }
+    
 -(void)showStella{
     if(self.isFavorite){
         self.stella.tintColor = [UIColor colorWithWhite:1 alpha:1];
@@ -71,6 +64,15 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     _responseData = [[NSMutableData alloc]init];
+    //Ajout d'un spinner d'attente
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.spinner.frame = [[UIScreen mainScreen] bounds];
+    self.spinner.center = CGPointMake( self.view.frame.size.width /2,(self.view.frame.size.height / 2) - 64);
+    self.spinner.color = [UIColor blackColor];
+    [self.spinner startAnimating];
+    [self.view addSubview:self.spinner];
+
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
@@ -95,7 +97,7 @@
     if([aFav.favList objectForKey:[self.risultati[0] objectForKey:@"id"]]){
         self.isFavorite = YES;}
     [self showStella];
-    NSLog(@"condition %@, risul %@",[aFav.favList objectForKey:[self.risultati[0] objectForKey:@"id"]], [self.risultati[0] objectForKey:@"id"]);
+    NSLog(@"afav %@, risul %@",aFav.favList , [self.risultati[0] objectForKey:@"id"]);
     [self.tableView reloadData];
     //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.spinner stopAnimating];
@@ -127,8 +129,7 @@
     favorites *aFavorite = [[favorites alloc] init];
     aFavorite = [favorites getFav];
     if(!aFavorite){ aFavorite.favList = [[NSMutableDictionary alloc] init];
-        [aFavorite.favList setObject:@"x" forKey:@"y"];
-        NSLog(@"jhgjhk");}
+        [aFavorite.favList setObject:@"x" forKey:@"y"];}
     __block NSMutableArray *json;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
@@ -140,7 +141,7 @@
                                NSString *unique  = [tmpJson valueForKey:@"id"];
                                [aFavorite.favList setObject:tmpJson forKey:unique];
                                //aFavorite.favList = muTemp ;
-                              // NSLog(@"afav %@",aFavorite.favList);
+                               //NSLog(@"afav %@",aFavorite.favList);
                                [favorites saveFav:aFavorite];
                          }];
     //self.isFavorite = YES;
@@ -150,7 +151,7 @@
 -(void)removeFavorite{
     favorites *aFavorite = [favorites getFav];
     [aFavorite.favList removeObjectForKey:[self.risultati[0] objectForKey:@"id"]];
-    NSLog(@"risultati %@",[self.risultati[0] objectForKey:@"id"]);
+    //NSLog(@"risultati %@",[self.risultati[0] objectForKey:@"id"]);
     self.isFavorite = NO;
     [favorites saveFav:aFavorite];
 }

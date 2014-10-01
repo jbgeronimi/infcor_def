@@ -8,28 +8,77 @@
 
 #import "AppDelegate.h"
 #import "prefsViewController.h"
+#import "pref.h"
+#import "params.h"
 #import "ViewController.h"
+#import "favoritesTableViewController.h"
+#import "prefsViewController.h"
 
 
 @implementation AppDelegate
 
 
-- (id) shared:(NSString *)context
-{
-//  context.lng = "@co";
-//    NSString *lng = @"co";
-    return context;
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setDefaultValuesForVariables];
-
-    // Override point for customization after application launch.
+    
+    //self.aParam = [[params alloc] init];
+    
     ViewController *VC = [[ViewController alloc] init];
     UINavigationController *navViewController = [[UINavigationController alloc] initWithRootViewController:VC];
-    self.window.rootViewController = navViewController;
+
+    favoritesTableViewController *favVC = [[favoritesTableViewController alloc] init];
+    favVC.gio = self.gio;
+    UINavigationController *favNavController = [[UINavigationController alloc] initWithRootViewController:favVC];
+    
+    prefsViewController *prefsVC = [[prefsViewController alloc] init];
+    //prefsVC.alangue = self.alangue;
+   // prefsVC.gio = self.gio;
+    UINavigationController *prefsNavController = [[UINavigationController alloc] initWithRootViewController:prefsVC];
+    
+    // aboutViewController *aboutVC = [[aboutViewController alloc] init];
+    // UINavigationController *aboutNavController = [[UINavigationController alloc] initWithRootViewController:aboutViewController];
+    
+//les icones de la tabbar
+    //la Home
+    UIImage *casaViota = [UIImage imageNamed:@"casaViota"];
+    casaViota = [casaViota imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *casaPiena = [UIImage imageNamed:@"casaPiena"];
+    casaPiena = [casaPiena imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UITabBarItem *itemCasa = [[UITabBarItem alloc] initWithTitle:@"" image:casaViota selectedImage:casaPiena];
+    itemCasa.tag = 1;
+    VC.tabBarItem = itemCasa;
+    
+    //les favoris
+    UIImage *stellaViota = [UIImage imageNamed:@"stellaViota"];
+    stellaViota = [stellaViota imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *stellaPiena = [UIImage imageNamed:@"stellaPiena"];
+    stellaPiena = [stellaPiena imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UITabBarItem *itemFav =[[UITabBarItem alloc] initWithTitle:@"" image:stellaViota selectedImage:stellaPiena];
+    favVC.tabBarItem = itemFav;
+    
+    //Les réglages
+    UIImage *prefViota = [UIImage imageNamed:@"prefViota"];
+    prefViota = [prefViota imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *prefPiena = [UIImage imageNamed:@"prefPiena"];
+    prefPiena = [prefPiena imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UITabBarItem *itmePrefs = [[UITabBarItem alloc] initWithTitle:@"" image:prefViota selectedImage:prefPiena];
+    prefsVC.tabBarItem = itmePrefs;
+    prefsVC.aParam = VC.aParam;
+    //prefsVC.params = self.params;
+    
+    //les couleurs
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[navViewController, favNavController, prefsNavController/*,aboutNavController*/];
+    //tabBarController.tabBar.translucent = NO;
+    [tabBarController.tabBar setBarTintColor:[UIColor colorWithRed:0.129 green:0.512 blue:0.99 alpha:0.900]];
+    tabBarController.tabBar.backgroundColor = [UIColor blackColor];
+    tabBarController.tabBar.tintColor = [UIColor whiteColor];
+    
+    self.window.rootViewController = tabBarController;
+    
     [self.window makeKeyAndVisible];
+    
 //    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
 /*    NSURL *scriptUrl = [NSURL URLWithString:@"http://google.com"];
     NSData *data = [NSData dataWithContentsOfURL:scriptUrl];
@@ -49,8 +98,42 @@
 
 - (void)setDefaultValuesForVariables
 {
-  //  self.params = @"FRANCESE DEFINIZIONE SINONIMI TALIANU";
-}
+    NSMutableArray *dbb = [[NSMutableArray alloc] init];
+    [dbb addObject:@"FRANCESE" ];
+    [dbb addObject:@"DEFINIZIONE"];
+    [dbb addObject:@"SINONIMI"];
+    NSMutableArray *corsu = [[NSMutableArray alloc] init];
+    [corsu addObject: @"FRANCESE"];
+    [corsu addObject:@"Definizione"];
+    [corsu addObject:@"Sinonimi"];
+    NSMutableArray *fcese = [[NSMutableArray alloc] init];
+    [fcese addObject:@"CORSU"];
+    [fcese addObject:@"Définition en Corse"];
+    [fcese addObject:@"Synonymes"];
+    NSMutableArray *liste = [[NSMutableArray alloc] init];
+    [liste addObject:@{@"mot_corse":@"id",
+                       @"mot_francais":@"FRANCESE"}];
+    NSMutableArray *mots = [[NSMutableArray alloc] init];
+    [mots addObject:@{@"mot_corse":@"FRANCESE",
+                      @"mot_francais":@"id"}];
+    [mots addObject:@"DEFINIZIONE"];
+    [mots addObject:@"SINONIMI"];
+    NSDictionary *parames = @{
+                              @"dbb_query":dbb,
+                              @"mot_corse":corsu,
+                              @"mot_francais" : fcese,
+                              @"affiche_liste":liste,
+                              @"affiche_mot":mots};
+    //pref *aPref = [[pref alloc]init];
+    pref *aPref = [pref getPref];
+    self.aParam.parametres = aPref.params;
+    NSLog(@"pref %@",aPref.params);
+    if(!aPref) {
+        pref *aPref = [[pref alloc] initWithParams:parames];
+        self.aParam.parametres = aPref.params;
+        [pref savePref:aPref];
+    }
+    self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

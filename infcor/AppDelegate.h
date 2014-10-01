@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "langue.h"
+#import "params.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) NSString *params;
+//@property (strong, nonatomic) NSDictionary *params;
+//@property (strong,nonatomic) NSString *alangue;
+@property NSDictionary *defText;
+@property (strong,nonatomic) params *aParam;
+@property UIFont *gio;
 @end

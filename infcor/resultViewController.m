@@ -9,6 +9,8 @@
 #import "resultViewController.h"
 #import "detailViewController.h"
 #import "contactViewController.h"
+#import "favoritesTableViewController.h"
+#import "prefsViewController.h"
 
 
 @interface resultViewController ()
@@ -51,6 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+  
     self.view.backgroundColor = [UIColor whiteColor];
     self.resultTableView=[[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStylePlain];
     self.resultTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);

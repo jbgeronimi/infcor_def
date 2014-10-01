@@ -9,6 +9,7 @@
 #import "prefsViewController.h"
 #import "ViewController.h"
 #import "AppDelegate.h"
+#import "params.h"
 #import "pref.h"
 
 @interface prefsViewController ()
@@ -27,7 +28,18 @@
     return self;
 }
 -(void) viewWillAppear:(BOOL)animated{
-    self.title = @"Options";
+    //self.aParam = [[params alloc]init];
+    [self.navigationController setNavigationBarHidden:YES];
+    //self.AP = self.aParam.alangue;
+    //self.allParams = self.aParam.allParams;
+   // self.title = @"Options";
+    self.allParams = @{
+                       @"dbb_query":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
+                       @"affiche_mot":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
+                       @"mot_corse": @[@"Talianu",@"Inglese",@"Natura",@"Prununzia",@"Definizione",@"Etimulugia",@"Grammatica",@"Variante",@"Sinonimi",@"Antonimi",@"Derivati Cumposti",@"Spressioni è Pruverbii",@"Analugie",@"Citazioni dà Autori",@"Bibliografia",@"Indice"],
+                       @"mot_francais" : @[@"Italien",@"Anglais",@"Genre",@"Prononciation",@"Définition en Corse",@"Etymologie",@"Grammaire",@"Variantes Graphiques",@"Synonymes",@"Antonymes",@"Dérivés Composés",@"Expressions et Proverbes",@"Analogies",@"Citations d'Auteurs",@"Bibliographie",@"Indice"]
+                       };
+    [self.tableView reloadData];
 }
 
 -(NSDictionary *)decodeWithCoder:(NSCoder *)aDecoder {
@@ -41,29 +53,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.allParams = @{
-                       @"dbb_query":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
-                       @"affiche_mot":@[@"TALIANU",@"INGLESE",@"NATURA",@"PRUNUNCIA",@"DEFINIZIONE",@"ETIMULUGIA",@"GRAMMATICA",@"VARIANTESD",@"SINONIMI",@"ANTONIMI",@"DERIVADICOMPOSTI",@"SPRESSIONIEPRUVERBII",@"ANALUGIE",@"CITAZIONIDAAUTORI",@"BIBLIOGRAFIA",@"INDICE"],
-                       @"mot_corse": @[@"Talianu",@"Inglese",@"Natura",@"Prununzia",@"Definizione",@"Etimulugia",@"Grammatica",@"Variante",@"Sinonimi",@"Antonimi",@"Derivati Cumposti",@"Spressioni è Pruverbii",@"Analugie",@"Citazioni dà Autori",@"Bibliografia",@"Indice"],
-                       @"mot_francais" : @[@"Italien",@"Anglais",@"Genre",@"Prononciation",@"Définition en Corse",@"Etymologie",@"Grammaire",@"Variantes Graphiques",@"Synonymes",@"Antonymes",@"Dérivés Composés",@"Expressions et Proverbes",@"Analogies",@"Citations d'Auteurs",@"Bibliographie",@"Indice"]
-                       };
     self.params = [pref getPref].params;
     // un tableau avec tous les elements de params
     self.afficheParams=[[UITableView alloc] init];
     self.afficheParams.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.afficheParams.delegate = self;
     self.afficheParams.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    self.tableView.sectionFooterHeight = 16;
-    self.tableView.rowHeight = 35;
-    if (self.modalPresentationStyle == UIModalPresentationCustom) {
-        
-    }
+    //self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    //self.tableView.sectionFooterHeight = 16;
+    //self.tableView.rowHeight = 39;
+    //if (self.modalPresentationStyle == UIModalPresentationCustom) {    }
 }
-
+/*
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    /*self.view.layer.borderColor = [UIColor blackColor].CGColor;
-     self.view.layer.borderWidth = 2.0f;*/
+    self.view.layer.borderColor = [UIColor blackColor].CGColor;
+     self.view.layer.borderWidth = 2.0f;
     UIButton *vabe = [UIButton buttonWithType:UIButtonTypeSystem];
     vabe.backgroundColor = [UIColor whiteColor];
     vabe.tintColor = [UIColor blackColor];
@@ -77,11 +81,11 @@
 {
     return 25.0f;
 }
-
+*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.allParams[self.alangue] count ];
+    return [self.allParams[self.aParam.alangue] count ];
 }
 
 
@@ -94,12 +98,12 @@
     }
     UIFont *fonte= [UIFont fontWithName:@"klill" size:17];
     cell.textLabel.font = fonte;
-    cell.textLabel.text = self.allParams[self.alangue][indexPath.row];
+    cell.textLabel.text = self.allParams[self.aParam.alangue][indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
     cell.accessoryView = switchView;
     [switchView setTag:indexPath.row];
-    [switchView setOn:[self.params[self.alangue] containsObject:self.allParams[self.alangue][indexPath.row]] animated:NO];
+    [switchView setOn:[self.params[self.aParam.alangue] containsObject:self.allParams[self.aParam.alangue][indexPath.row]] animated:NO];
     [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     return cell;
 }
@@ -107,7 +111,7 @@
 - (void) switchChanged:(id)sender {
     UISwitch* switchControl = sender;
     if(switchControl.isOn){
-        if (![self.params[self.alangue] containsObject:self.allParams[self.alangue][switchControl.tag]]){
+        if (![self.params[self.aParam.alangue] containsObject:self.allParams[self.aParam.alangue][switchControl.tag]]){
             [self.params[@"dbb_query"] addObject:self.allParams[@"dbb_query"][switchControl.tag]];
             [self.params[@"affiche_mot"] addObject:self.allParams[@"affiche_mot"][switchControl.tag]];
             [self.params[@"mot_corse"] addObject:self.allParams[@"mot_corse"][switchControl.tag]];
@@ -115,7 +119,7 @@
         }
     }
     if (!switchControl.isOn){
-        if ([self.params[self.alangue] containsObject:self.allParams[self.alangue][switchControl.tag]]){
+        if ([self.params[self.aParam.alangue] containsObject:self.allParams[self.aParam.alangue][switchControl.tag]]){
             [self.params[@"dbb_query"] removeObject:self.allParams[@"dbb_query"][switchControl.tag]];
             [self.params[@"affiche_mot"] removeObject:self.allParams[@"affiche_mot"][switchControl.tag]];
             [self.params[@"mot_corse"] removeObject:self.allParams[@"mot_corse"][switchControl.tag]];
@@ -127,14 +131,14 @@
     
 }
 
-- (IBAction) goodJob:(id)sender;
+- (void) viewDidDisappear:(BOOL)animated  ;
 {
     //ViewController *VC = [[ViewController alloc] init];
     pref *aPref = [[pref alloc] init];
     aPref.params= self.params;
     [pref savePref:aPref];
     //VC.params = self.params;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
