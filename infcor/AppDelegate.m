@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "prefsViewController.h"
 #import "pref.h"
-#import "params.h"
 #import "ViewController.h"
 #import "favoritesTableViewController.h"
 #import "prefsViewController.h"
@@ -20,10 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setDefaultValuesForVariables];
-    
-    //self.aParam = [[params alloc] init];
-    
+    //[self setDefaultValuesForVariables];
+        
     ViewController *VC = [[ViewController alloc] init];
     UINavigationController *navViewController = [[UINavigationController alloc] initWithRootViewController:VC];
 
@@ -64,7 +61,7 @@
     prefPiena = [prefPiena imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UITabBarItem *itmePrefs = [[UITabBarItem alloc] initWithTitle:@"" image:prefViota selectedImage:prefPiena];
     prefsVC.tabBarItem = itmePrefs;
-    prefsVC.aParam = VC.aParam;
+    //prefsVC.aParam = VC.aParam;
     //prefsVC.params = self.params;
     
     //les couleurs
@@ -124,14 +121,14 @@
                               @"mot_francais" : fcese,
                               @"affiche_liste":liste,
                               @"affiche_mot":mots};
-    //pref *aPref = [[pref alloc]init];
-    pref *aPref = [pref getPref];
-    self.aParam.parametres = aPref.params;
-    NSLog(@"pref %@",aPref.params);
-    if(!aPref) {
-        pref *aPref = [[pref alloc] initWithParams:parames];
-        self.aParam.parametres = aPref.params;
-        [pref savePref:aPref];
+    //self.aPref = [[pref alloc]init];
+    self.aPref = [pref getPref];
+    //self.aParam.parametres = aPref.params;
+    //NSLog(@"pref %@",self.aPref.params);
+    if(!self.aPref) {
+        self.aPref = [[pref alloc] initWithParams:parames];
+        //self.aParam.parametres = aPref.params;
+        [pref savePref:self.aPref];
     }
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};}
 - (void)applicationWillResignActive:(UIApplication *)application

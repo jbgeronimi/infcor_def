@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "pref.h"
 
 @interface detailViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak,nonatomic) NSDictionary *detailRisultati;
-@property (weak, nonatomic) NSString *alangue;
+//@property (weak, nonatomic) NSString *alangue;
 @property (strong,nonatomic) UITableView *detailTableView;
-@property (strong, nonatomic) NSDictionary *params;
-@property (strong,nonatomic) NSDictionary *allParams;
+//@property (strong, nonatomic) NSDictionary *params;
+//@property (strong,nonatomic) NSDictionary *allParams;
 @property (strong,nonatomic) UIFont *gio;
+@property pref *aPref;
 @end

@@ -32,10 +32,13 @@
     self.favoritesTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.favoritesTableView.delegate = self;
     self.favoritesTableView.dataSource = self;
-    [self.favoritesTableView reloadData];
 
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    self.aFav = [favorites getFav];
+    [self.tableView reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -60,7 +63,7 @@
     self.allkeys = [self.aFav.favList allKeys];
     cell.textLabel.text = self.allkeys[indexPath.row];
     //le mot contient " : " il faut les enlever pour l'esthetique
-   // cell.textLabel.text = [cell.textLabel.text substringFromIndex:2];
+    cell.textLabel.text = [cell.textLabel.text substringFromIndex:2];
     cell.textLabel.font = self.gio;
     return cell;
 }
@@ -68,14 +71,15 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    pref *aPref = [pref getPref];
+    //pref *aPref = [pref getPref];
     detailViewController *detVC = [[detailViewController alloc] init];
+    //NSLog(@"detailrisultati de favoritesVC %@", [self.aFav.favList valueForKey:self.allkeys[indexPath.row]]);
     detVC.detailRisultati = [self.aFav.favList valueForKey:self.allkeys[indexPath.row]];
-    detVC.alangue = self.alangue;
-    detVC.params = aPref.params;
-    detVC.title = self.allkeys[indexPath.row];
-    detVC.title = [detVC.title substringFromIndex:2];
-    detVC.gio = self.gio;
+    //detVC.alangue = aPref.alangue;
+  //  detVC.params = aPref.params;
+    detVC.title = [self.allkeys[indexPath.row] substringFromIndex:2];
+    //detVC.title = [detVC.title substringFromIndex:2];
+    //detVC.gio = self.gio;
     
     [self.navigationController pushViewController:detVC animated:YES];
 }

@@ -11,6 +11,7 @@
 #import "contactViewController.h"
 #import "favoritesTableViewController.h"
 #import "prefsViewController.h"
+#import "pref.h"
 
 
 @interface resultViewController ()
@@ -60,8 +61,11 @@
     self.resultTableView.delegate = self;
     self.resultTableView.dataSource = self;
     self.resultTableView.separatorStyle = UITableViewCellSelectionStyleNone;
-
-    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/debut.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[self.params[@"dbb_query"] componentsJoinedByString:@" "] ];
+    
+    pref *aPref = [pref getPref];
+    NSMutableArray *dbb_queryPlus = [[NSMutableArray alloc] initWithArray:@[@"FRANCESE"]];
+    [dbb_queryPlus addObjectsFromArray:aPref.allParams[@"dbb_query"] ];
+    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/debut.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[dbb_queryPlus componentsJoinedByString:@" "] ];
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //Connection à la base en mode asynchrone : utilisation de didReceiveresponse,didReceiveData,willCacheResponse,connectionDidFinishLoading
     self.searchURL = [NSURL URLWithString:cercaURL];
@@ -155,8 +159,9 @@
     
     detailViewController *detVC = [[detailViewController alloc] init];
     detVC.detailRisultati = self.risultati[indexPath.row];
-    detVC.alangue = self.alangue;
-    detVC.params = self.params;
+  //  detVC.alangue = self.alangue;
+    //detVC.params = self.params;
+    NSLog(@"dbb_query de rvc %@", self.params[@"dbb_query"]);
     detVC.title = self.risultati[indexPath.row][[[self.params valueForKey:@"affiche_liste"] valueForKey:self.alangue][0]];
     detVC.title = [detVC.title substringFromIndex:2];
     detVC.gio = self.gio;

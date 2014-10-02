@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "params.h"
+#import "pref.h"
 
 
 @interface prefsViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource,NSCoding>
@@ -17,5 +17,5 @@
 //@property (strong, nonatomic) NSString  *alangue;
 @property (strong,nonatomic) NSDictionary *params;
 @property (strong,nonatomic) NSDictionary *allParams;
-@property (strong,nonatomic) params *aParam;
+@property (strong,nonatomic) pref *aPref;
 @end

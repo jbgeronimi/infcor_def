@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "params.h"
+#import "pref.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -15,6 +15,6 @@
 //@property (strong, nonatomic) NSDictionary *params;
 //@property (strong,nonatomic) NSString *alangue;
 @property NSDictionary *defText;
-@property (strong,nonatomic) params *aParam;
+@property (strong,nonatomic) pref *aPref;
 @property UIFont *gio;
 @end

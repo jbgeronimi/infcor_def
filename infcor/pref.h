@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface pref : NSObject<NSCoding>
+
+@property (strong,nonatomic) NSDictionary *allParams;
+@property (strong,nonatomic) NSString *alangue;
 @property (strong,nonatomic)  NSDictionary *params;
 
 -(id)initWithParams:(NSDictionary *)aPref;

@@ -13,6 +13,5 @@
 @property (strong,nonatomic) UITableView *favoritesTableView;
 @property (strong,nonatomic) favorites *aFav;
 @property (strong,nonatomic) UIFont *gio;
-@property (strong, nonatomic) NSString *alangue;
 @property NSArray *allkeys;
 @end

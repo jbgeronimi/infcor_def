@@ -17,13 +17,18 @@
 @implementation afficheMotViewController
 
 -(void)viewWillAppear:(BOOL)animated {
-    pref *aPref = [pref getPref];
-    self.params = aPref.params;
+    //self.params = aPref.params;
     [self.navigationController setNavigationBarHidden:NO];
     //une etoile de favoris dans la barre de Nav
     self.stella=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stella"] style:UIBarButtonItemStyleDone target:self action:@selector(cambiaStella:)];
     [self showStella];
- }
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    self.aPref = [pref getPref];
+    [self.tableView reloadData];
+}
     
 -(void)showStella{
     if(self.isFavorite){
@@ -53,7 +58,10 @@
     self.afficheMotTableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
 
-    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[self.params[@"dbb_query"] componentsJoinedByString:@" "] ];
+    
+    NSMutableArray *dbb_queryPlus = [[NSMutableArray alloc] initWithArray:@[@"FRANCESE"]];
+    [dbb_queryPlus addObjectsFromArray:self.aPref.allParams[@"dbb_query"] ];
+    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.aPref.alangue,[dbb_queryPlus componentsJoinedByString:@" "] ];
    // if([self.alangue isEqualToString:@"mot_francais"]){[self.params[@"dbb_query"] insertObject:@"id" atIndex:0 ];}
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *cerca = [NSURL URLWithString:cercaURL];
@@ -120,16 +128,19 @@
 //la fonction d'ajout des favoris
 -(void)addFavorite{
     self.willSetFavorite = TRUE;
-    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[self.allParams[@"dbb_query"] componentsJoinedByString:@" "] ];
+    NSMutableArray *dbb_queryPlus = [[NSMutableArray alloc] initWithArray:@[@"FRANCESE"]];
+    [dbb_queryPlus addObjectsFromArray:self.aPref.allParams[@"dbb_query"] ];
+    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.aPref.alangue,[dbb_queryPlus componentsJoinedByString:@" "] ];
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-   // NSLog(self.allParams[@"dbb_query"]);
+    //NSLog(@"dbb_query de fav %@",dbb_queryPlus);
     NSURL *cerca = [[NSURL alloc] initWithString:cercaURL];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:cerca];
     // Requete ASynchrone
     favorites *aFavorite = [[favorites alloc] init];
     aFavorite = [favorites getFav];
     if(!aFavorite){ aFavorite.favList = [[NSMutableDictionary alloc] init];
-        [aFavorite.favList setObject:@"x" forKey:@"y"];}
+        [aFavorite.favList setObject:@"x" forKey:@"xyz"];}
+    else {[aFavorite.favList removeObjectForKey:@"y"];}
     __block NSMutableArray *json;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
@@ -162,16 +173,12 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [self.afficheMotTableView reloadData];
-}
 #pragma mark - Table view data source
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.params[self.alangue] count];
+    return [self.aPref.params[self.aPref.alangue] count];
 }
 
 
@@ -185,15 +192,15 @@
     }
     UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
     UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:[self.params[self.alangue][indexPath.row] uppercaseString] attributes:@{NSFontAttributeName:fonte20}];
+    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:[self.aPref.params[self.aPref.alangue][indexPath.row] uppercaseString] attributes:@{NSFontAttributeName:fonte20}];
     NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
     if((self.risultati.count > 0) && (indexPath.row < 1)) {
-        NSString *mottu = [self.risultati valueForKey:[[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]][0];
+        NSString *mottu = [self.risultati valueForKey:[[self.aPref.params valueForKey:@"affiche_mot"][0] valueForKey:self.aPref.alangue]][0];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
         cell.textLabel.attributedText = leTexte;}
     else if(self.risultati.count > 0){
-        NSString *mottu = [self.risultati valueForKey:self.params[@"affiche_mot"][indexPath.row]][0];
+        NSString *mottu = [self.risultati valueForKey:self.aPref.params[@"affiche_mot"][indexPath.row]][0];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
         cell.textLabel.attributedText = leTexte;}
@@ -213,15 +220,15 @@
 {
     UIFont *fonte= [UIFont fontWithName:@"Klill" size:18];
     UIFont *fonte20 = [UIFont fontWithName:@"Klill" size:21];
-    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:[self.params[self.alangue][indexPath.row] uppercaseString]  attributes:@{NSFontAttributeName:fonte20}];
+    NSAttributedString *longDef=[[NSAttributedString alloc]initWithString:[self.aPref.params[self.aPref.alangue][indexPath.row] uppercaseString]  attributes:@{NSFontAttributeName:fonte20}];
     NSMutableAttributedString *leTexte = [[NSMutableAttributedString alloc] initWithAttributedString:longDef];
     if((self.risultati.count > 0) && (indexPath.row < 1)) {
-        NSString *mottu = [self.risultati valueForKey:[[self.params valueForKey:@"affiche_mot"][0] valueForKey:self.alangue]][0];
+        NSString *mottu = [self.risultati valueForKey:[[self.aPref.params valueForKey:@"affiche_mot"][0] valueForKey:self.aPref.alangue]][0];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
         }
     else if(self.risultati.count > 0){
-        NSString *mottu = [self.risultati valueForKey:self.params[@"affiche_mot"][indexPath.row]][0];
+        NSString *mottu = [self.risultati valueForKey:self.aPref.params[@"affiche_mot"][indexPath.row]][0];
         NSAttributedString *leMot = [[NSAttributedString alloc] initWithString:mottu attributes:@{NSFontAttributeName:fonte}];
         [leTexte appendAttributedString:leMot];
         }

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "params.h"
+#import "pref.h"
 
 @interface ViewController : UIViewController <UIViewControllerTransitioningDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -22,5 +22,5 @@
 @property (assign,nonatomic) NSUInteger lindex;
 @property (strong,nonatomic) UIFont *gio;
 @property NSDictionary *defText;
-@property (strong,nonatomic) params *aParam;
+@property (strong,nonatomic) pref *aPref;
 @end

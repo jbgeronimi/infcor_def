@@ -9,7 +9,7 @@
 #import "prefsViewController.h"
 #import "ViewController.h"
 #import "AppDelegate.h"
-#import "params.h"
+//#import "params.h"
 #import "pref.h"
 
 @interface prefsViewController ()
@@ -29,8 +29,9 @@
 }
 -(void) viewWillAppear:(BOOL)animated{
     //self.aParam = [[params alloc]init];
+    self.aPref = [pref getPref];
     [self.navigationController setNavigationBarHidden:YES];
-    //self.AP = self.aParam.alangue;
+    //self.AP = self.aPref.alangue;
     //self.allParams = self.aParam.allParams;
    // self.title = @"Options";
     self.allParams = @{
@@ -44,16 +45,16 @@
 
 -(NSDictionary *)decodeWithCoder:(NSCoder *)aDecoder {
     [aDecoder decodeObjectForKey:@"params"];
-    return self.params;
+    return self.aPref.params;
 }
 
 -(void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeObject:self.params forKey:@"params"];
+    [aCoder encodeObject:self.aPref.params forKey:@"params"];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.params = [pref getPref].params;
+    //self.aPref.params = [pref getPref].params;
     // un tableau avec tous les elements de params
     self.afficheParams=[[UITableView alloc] init];
     self.afficheParams.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -85,7 +86,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.allParams[self.aParam.alangue] count ];
+    return [self.aPref.allParams[self.aPref.alangue] count ];
 }
 
 
@@ -98,12 +99,12 @@
     }
     UIFont *fonte= [UIFont fontWithName:@"klill" size:17];
     cell.textLabel.font = fonte;
-    cell.textLabel.text = self.allParams[self.aParam.alangue][indexPath.row];
+    cell.textLabel.text = self.aPref.allParams[self.aPref.alangue][indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
     cell.accessoryView = switchView;
     [switchView setTag:indexPath.row];
-    [switchView setOn:[self.params[self.aParam.alangue] containsObject:self.allParams[self.aParam.alangue][indexPath.row]] animated:NO];
+    [switchView setOn:[self.aPref.params[self.aPref.alangue] containsObject:self.aPref.allParams[self.aPref.alangue][indexPath.row]] animated:NO];
     [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     return cell;
 }
@@ -111,19 +112,19 @@
 - (void) switchChanged:(id)sender {
     UISwitch* switchControl = sender;
     if(switchControl.isOn){
-        if (![self.params[self.aParam.alangue] containsObject:self.allParams[self.aParam.alangue][switchControl.tag]]){
-            [self.params[@"dbb_query"] addObject:self.allParams[@"dbb_query"][switchControl.tag]];
-            [self.params[@"affiche_mot"] addObject:self.allParams[@"affiche_mot"][switchControl.tag]];
-            [self.params[@"mot_corse"] addObject:self.allParams[@"mot_corse"][switchControl.tag]];
-            [self.params[@"mot_francais"] addObject:self.allParams[@"mot_francais"][switchControl.tag]];
+        if (![self.aPref.params[self.aPref.alangue] containsObject:self.aPref.allParams[self.aPref.alangue][switchControl.tag]]){
+            [self.aPref.params[@"dbb_query"] addObject:self.aPref.allParams[@"dbb_query"][switchControl.tag]];
+            [self.aPref.params[@"affiche_mot"] addObject:self.aPref.allParams[@"affiche_mot"][switchControl.tag]];
+            [self.aPref.params[@"mot_corse"] addObject:self.aPref.allParams[@"mot_corse"][switchControl.tag]];
+            [self.aPref.params[@"mot_francais"] addObject:self.aPref.allParams[@"mot_francais"][switchControl.tag]];
         }
     }
     if (!switchControl.isOn){
-        if ([self.params[self.aParam.alangue] containsObject:self.allParams[self.aParam.alangue][switchControl.tag]]){
-            [self.params[@"dbb_query"] removeObject:self.allParams[@"dbb_query"][switchControl.tag]];
-            [self.params[@"affiche_mot"] removeObject:self.allParams[@"affiche_mot"][switchControl.tag]];
-            [self.params[@"mot_corse"] removeObject:self.allParams[@"mot_corse"][switchControl.tag]];
-            [self.params[@"mot_francais"] removeObject:self.allParams[@"mot_francais"][switchControl.tag]];
+        if ([self.aPref.params[self.aPref.alangue] containsObject:self.aPref.allParams[self.aPref.alangue][switchControl.tag]]){
+            [self.aPref.params[@"dbb_query"] removeObject:self.aPref.allParams[@"dbb_query"][switchControl.tag]];
+            [self.aPref.params[@"affiche_mot"] removeObject:self.aPref.allParams[@"affiche_mot"][switchControl.tag]];
+            [self.aPref.params[@"mot_corse"] removeObject:self.aPref.allParams[@"mot_corse"][switchControl.tag]];
+            [self.aPref.params[@"mot_francais"] removeObject:self.aPref.allParams[@"mot_francais"][switchControl.tag]];
         }
     }
     if(switchControl.on){
@@ -131,13 +132,13 @@
     
 }
 
-- (void) viewDidDisappear:(BOOL)animated  ;
+- (void) viewWillDisappear:(BOOL)animated  ;
 {
     //ViewController *VC = [[ViewController alloc] init];
-    pref *aPref = [[pref alloc] init];
-    aPref.params= self.params;
-    [pref savePref:aPref];
-    //VC.params = self.params;
+    //pref *aPref = [[pref alloc] init];
+    //aPref.params= self.aPref.params;
+    [pref savePref:self.aPref];
+    //VC.params = self.aPref.params;
     //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
