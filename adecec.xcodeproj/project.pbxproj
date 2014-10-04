@@ -19,6 +19,7 @@
 		1677E45A19CF077400C6B619 /* pref.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677E45819CF077400C6B619 /* pref.m */; };
 		167DA2AF19B9018400CC9F1C /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167DA2AE19B9018400CC9F1C /* iAd.framework */; };
 		1684053619B23DFB009E0709 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1684053519B23DFB009E0709 /* SystemConfiguration.framework */; };
+		16A7BE4C19D9B7760096AB5B /* favoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A7BE4B19D9B7760096AB5B /* favoritesTableViewController.m */; };
 		16C3B82A198A352B000322E8 /* CODE Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 16C3B829198A352B000322E8 /* CODE Bold.otf */; };
 		16C3B82C198A353E000322E8 /* CODE Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 16C3B82B198A353E000322E8 /* CODE Light.otf */; };
 		16C3B82F198A3AAF000322E8 /* Giorgio-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 16C3B82D198A3AAF000322E8 /* Giorgio-Thin.ttf */; };
@@ -72,6 +73,8 @@
 		1693B33719C31984007133A6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		1693B33819C31984007133A6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1693B33919C31984007133A6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		16A7BE4A19D9B7760096AB5B /* favoritesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = favoritesTableViewController.h; sourceTree = "<group>"; };
+		16A7BE4B19D9B7760096AB5B /* favoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = favoritesTableViewController.m; sourceTree = "<group>"; };
 		16C3B829198A352B000322E8 /* CODE Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CODE Bold.otf"; sourceTree = "<group>"; };
 		16C3B82B198A353E000322E8 /* CODE Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CODE Light.otf"; sourceTree = "<group>"; };
 		16C3B82D198A3AAF000322E8 /* Giorgio-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Giorgio-Thin.ttf"; sourceTree = "<group>"; };
@@ -236,6 +239,8 @@
 				162A0D9419B351F9007C894B /* contactViewController.m */,
 				164D421219AA20810017F82B /* detailViewController.h */,
 				164D421319AA20810017F82B /* detailViewController.m */,
+				16A7BE4A19D9B7760096AB5B /* favoritesTableViewController.h */,
+				16A7BE4B19D9B7760096AB5B /* favoritesTableViewController.m */,
 				16F756A51981990F00CF9F80 /* prefsViewController.h */,
 				16F756A61981990F00CF9F80 /* prefsViewController.m */,
 				16FC7C241984101500CE1C0F /* resultViewController.h */,
@@ -364,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				166E21D7199FB37800640F55 /* afficheMotViewController.m in Sources */,
+				16A7BE4C19D9B7760096AB5B /* favoritesTableViewController.m in Sources */,
 				163BAF0319D2FC9E00E27EA5 /* favorites.m in Sources */,
 				16F7568619814EA200CF9F80 /* ViewController.m in Sources */,
 				16F756AF19819B1100CF9F80 /* SideTransition.m in Sources */,
@@ -508,15 +514,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "infcor/ADECEC-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/infcor/ADECEC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = adecec;
-				PROVISIONING_PROFILE = "02d2f6e4-a010-4258-9cce-87c0c5c5827d";
+				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -527,15 +533,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "infcor/ADECEC-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/infcor/ADECEC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = adecec;
-				PROVISIONING_PROFILE = "02d2f6e4-a010-4258-9cce-87c0c5c5827d";
+				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				WRAPPER_EXTENSION = app;
 			};

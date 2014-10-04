@@ -105,7 +105,6 @@
     if([aFav.favList objectForKey:[self.risultati[0] objectForKey:@"id"]]){
         self.isFavorite = YES;}
     [self showStella];
-    NSLog(@"afav %@, risul %@",aFav.favList , [self.risultati[0] objectForKey:@"id"]);
     [self.tableView reloadData];
     //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.spinner stopAnimating];

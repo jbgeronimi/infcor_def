@@ -10,6 +10,7 @@
 
 @implementation pref
 -(id)init {
+    
     NSMutableArray *dbb = [[NSMutableArray alloc] init];
     [dbb addObject:@"FRANCESE" ];
     [dbb addObject:@"DEFINIZIONE"];
@@ -62,13 +63,16 @@
                            };
         
         self.params = aParam;
-    }
+        self.titlePrefs = @{@"mot_corse":@"OZZIONI",
+                            @"mot_francais":@"OPTIONS"};
+   }
     return self;
 }
 -(pref *)initWithCoder:(NSCoder *)aDecoder{
     self.allParams = [aDecoder decodeObjectForKey:@"allParams"];
     self.params = [aDecoder decodeObjectForKey:@"params"];
     self.alangue = [aDecoder decodeObjectForKey:@"alangue"];
+    self.titlePrefs= [aDecoder decodeObjectForKey:@"titlePrefs"];
     return self;
 }
 
@@ -76,7 +80,8 @@
     [aCoder encodeObject:self.allParams forKey:@"allParams"];
     [aCoder encodeObject:self.params forKey:@"params"];
     [aCoder encodeObject:self.alangue forKey:@"alangue"];
-}
+    [aCoder encodeObject:self.titlePrefs forKey:@"titlePrefs"];
+      }
 + (NSString *)getPathToArchive{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                          NSUserDomainMask,

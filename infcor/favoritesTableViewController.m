@@ -28,20 +28,23 @@
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.aFav = [favorites getFav];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.favoritesTableView=[[UITableView alloc] init];
+    //self.favoritesTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height -99)];
     self.favoritesTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.favoritesTableView.delegate = self;
     self.favoritesTableView.dataSource = self;
+    self.gio = [UIFont fontWithName:@"Klill" size:20];
+    //[self.view addSubview:self.favoritesTableView];
 
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    self.aFav = [favorites getFav];
-    [self.tableView reloadData];
+    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) viewDidAppear:(BOOL)animated {
+    self.aFav = [favorites getFav];
+    pref *aPref = [pref getPref];
+    self.title = [self.aFav.titleFavoris valueForKey:aPref.alangue];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -79,11 +82,14 @@
   //  detVC.params = aPref.params;
     detVC.title = [self.allkeys[indexPath.row] substringFromIndex:2];
     //detVC.title = [detVC.title substringFromIndex:2];
-    //detVC.gio = self.gio;
+    detVC.gio = self.gio;
     
     [self.navigationController pushViewController:detVC animated:YES];
 }
 
-
+-(void)viewWillDisappear:(BOOL)animated {
+    self.title = @"";
+  //  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+}
 
 @end

@@ -51,6 +51,14 @@
     return self;
 }
 
+-(void) viewDidAppear:(BOOL)animated{
+    [self.resultTableView reloadData];
+    if(self.risultati){
+        //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [self.spinner stopAnimating];}
+    //    [super viewDidAppear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,10 +70,10 @@
     self.resultTableView.dataSource = self;
     self.resultTableView.separatorStyle = UITableViewCellSelectionStyleNone;
     
-    pref *aPref = [pref getPref];
+    self.aPref = [pref getPref];
     NSMutableArray *dbb_queryPlus = [[NSMutableArray alloc] initWithArray:@[@"FRANCESE"]];
-    [dbb_queryPlus addObjectsFromArray:aPref.allParams[@"dbb_query"] ];
-    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/debut.php?mot=%@&langue=%@&param=%@", self.searchText, self.alangue,[dbb_queryPlus componentsJoinedByString:@" "] ];
+    [dbb_queryPlus addObjectsFromArray:self.aPref.allParams[@"dbb_query"] ];
+    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/debut.php?mot=%@&langue=%@&param=%@", self.searchText, self.aPref.alangue,[dbb_queryPlus componentsJoinedByString:@" "] ];
     cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //Connection à la base en mode asynchrone : utilisation de didReceiveresponse,didReceiveData,willCacheResponse,connectionDidFinishLoading
     self.searchURL = [NSURL URLWithString:cercaURL];
@@ -102,8 +110,8 @@
                              @"mot_francais":@"ERREUR"};
         NSDictionary *textAlert = @{@"mot_corse":@"Nisun Risultatu pè a vostra ricerca. Forse ùn avete micca srittu a vostra parolla curettamente. Pudete cuntattà l'ADECEC pè prupone una soluzione",
                                  @"mot_francais":@"La banque INFCOR n'a pas de résultat à afficher. Il s'agit peut être d'une faute de frappe. Vous pouvez contacter l'ADECEC pour proposer une solution"};
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[erreur valueForKey:self.alangue]
-                                                        message:[textAlert valueForKey:self.alangue]
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[erreur valueForKey:self.aPref.alangue]
+                                                        message:[textAlert valueForKey:self.aPref.alangue]
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:@"contact", nil];
@@ -146,7 +154,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.text = self.risultati[indexPath.row][[[self.params valueForKey:@"affiche_liste"] valueForKey:self.alangue][0]];
+    cell.textLabel.text = self.risultati[indexPath.row][[[self.aPref.params valueForKey:@"affiche_liste"] valueForKey:self.aPref.alangue][0]];
 //le mot contient " : " il faut les enlever pour l'esthetique
     cell.textLabel.text = [cell.textLabel.text substringFromIndex:2];
     cell.textLabel.font = self.gio;
@@ -161,21 +169,13 @@
     detVC.detailRisultati = self.risultati[indexPath.row];
   //  detVC.alangue = self.alangue;
     //detVC.params = self.params;
-    NSLog(@"dbb_query de rvc %@", self.params[@"dbb_query"]);
-    detVC.title = self.risultati[indexPath.row][[[self.params valueForKey:@"affiche_liste"] valueForKey:self.alangue][0]];
+    detVC.title = self.risultati[indexPath.row][[[self.aPref.params valueForKey:@"affiche_liste"] valueForKey:self.aPref.alangue][0]];
     detVC.title = [detVC.title substringFromIndex:2];
     detVC.gio = self.gio;
 
     [self.navigationController pushViewController:detVC animated:YES];
 }
 
--(void) viewDidAppear:(BOOL)animated{
-    [self.resultTableView reloadData];
-    if(self.risultati){
-        //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        [self.spinner stopAnimating];}
-//    [super viewDidAppear:animated];
-}
 
 - (void)didReceiveMemoryWarning
 {

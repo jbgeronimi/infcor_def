@@ -13,6 +13,7 @@
 @property (strong,nonatomic) NSDictionary *allParams;
 @property (strong,nonatomic) NSString *alangue;
 @property (strong,nonatomic)  NSDictionary *params;
+@property (strong,nonatomic) NSDictionary *titlePrefs;
 
 -(id)initWithParams:(NSDictionary *)aPref;
 +(NSString *)getPathToArchive;

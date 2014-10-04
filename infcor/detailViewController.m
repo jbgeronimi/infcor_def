@@ -33,7 +33,6 @@
     self.detailTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.detailTableView.delegate = self;
     self.detailTableView.dataSource = self;
-    [self.detailTableView reloadData];
     //self.aPref = [pref getPref];
     //self.alangue = aPref.alangue;
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
@@ -45,6 +44,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+        //customisation de la barre de nav
+    [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                            NSFontAttributeName: [UIFont fontWithName:@"Code-BOLD" size:17.0f]
+                                                            }];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController setNavigationBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
+}
 -(void)viewDidAppear:(BOOL)animated {
     self.aPref = [pref getPref];
     [self.tableView reloadData];
@@ -115,7 +126,7 @@
     CGRect tailleCell = [leTexte boundingRectWithSize:maxCell
                                               options:NSStringDrawingUsesLineFragmentOrigin
                                               context:nil];
-        return tailleCell.size.height + MAX(15,tailleCell.size.height / 20);
+    return tailleCell.size.height + MAX(35,tailleCell.size.height / 20);
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

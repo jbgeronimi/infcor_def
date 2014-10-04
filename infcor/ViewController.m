@@ -32,35 +32,13 @@
     return self;
 }
 
-// Present the prefsViewController as a modal
-/*- (void) preferences:(id)sender{
-    
-    prefsViewController *prefsVC = [[prefsViewController alloc] init];
-    
-    prefsVC.modalPresentationStyle = UIModalPresentationCustom;
-    prefsVC.transitioningDelegate = self;
-    prefsVC.alangue = self.alangue;
-    prefsVC.params = self.params;
-    
-    [self presentViewController:prefsVC animated:YES completion:nil];
-}*/
-
-- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
-{
-    return [[SideTransition alloc] init];
-}
-
-- (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
-{
-    return [[SideDismissalTransition alloc] init];
-}
-
 -(void)viewWillAppear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     //[self.searchText becomeFirstResponder];
 }
 -(void)viewDidAppear:(BOOL)animated{
-        self.aPref = [pref getPref];
+    [self.navigationController setNavigationBarHidden:YES];
+    self.aPref = [pref getPref];
 
 }
 - (void)viewDidLoad
@@ -90,7 +68,8 @@
                                                object:nil];
     
     UIFont *titre = [UIFont fontWithName:@"Sansation" size:20];
-    NSString *langInit = @"Corsu \u2192 Francese";
+    NSDictionary *langInit = @{@"mot_corse":@"Corsu \u2192 Francese",
+                               @"mot_francais":@"Français \u2192 Corse"};
     //corsu - francese ou  francais-corse
     self.primu = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.primu.frame = CGRectMake(55,21, self.view.frame.size.width - 100, 42);
@@ -100,7 +79,7 @@
     //une image pour signifier l'inversion
     [self.primu setImage:[UIImage imageNamed:@"reload.png"] forState:UIControlStateNormal];
     self.primu.imageEdgeInsets = UIEdgeInsetsMake(0, self.primu.frame.size.width - 50 , 0, 0);
-    [self.primu setTitle:langInit forState:UIControlStateNormal];
+    [self.primu setTitle:[langInit valueForKey:self.aPref.alangue] forState:UIControlStateNormal];
     [self.primu setTitleEdgeInsets:UIEdgeInsetsMake(0, 25 - (self.primu.frame.size.width /2) , 0, 0)];
     // NSLog(@"frame image %f",self.primu.imageView.frame.size.width);
     [self.primu addTarget:self
@@ -245,8 +224,8 @@
 //si le mot a ete tape en entier et que "enter" a ete presse -> nouveau tableau avec toutes les possibilités associées au mot
 -(BOOL)enleveClavier {
     resultViewController *risultatiVC=[[resultViewController alloc] init];
-    risultatiVC.params = self.aPref.params;
-    risultatiVC.alangue = self.aPref.alangue;
+    //risultatiVC.params = self.aPref.params;
+   // risultatiVC.alangue = self.aPref.alangue;
     risultatiVC.searchText = self.searchText.text;
     risultatiVC.title = self.searchText.text;
     risultatiVC.gio = self.gio;
@@ -266,7 +245,7 @@
     NSDictionary *userInfo = [note userInfo];
     CGSize keySize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     CGRect newTable = self.suggestTableView.frame;
-    newTable.size.height = self.view.frame.size.height - 115 - MIN(keySize.height, keySize.width);
+    newTable.size.height = self.view.frame.size.height - MIN(keySize.height, keySize.width);
     self.suggestTableView.frame = newTable;
 }
 

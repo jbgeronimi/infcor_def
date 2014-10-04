@@ -22,17 +22,21 @@
     }else{
         self.favList = [[NSMutableDictionary alloc] initWithCapacity:1];
         [self.favList setObject:@"x" forKey:@"y"];
-        [favorites saveFav:self];
     }
-    return self;
+    self.titleFavoris = @{@"mot_corse":@"PREFERITI",
+                          @"mot_francais":@"FAVORIS"};
+    [favorites saveFav:self];
+   return self;
 }
 
 -(favorites *)initWithCoder:(NSCoder *)aDecoder{
     self.favList = [aDecoder decodeObjectForKey:@"favList"];
+    self.titleFavoris = [aDecoder decodeObjectForKey:@"titleFavoris"];
     return self;
 }
 
 -(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.titleFavoris forKey:@"titleFavoris"];
     [aCoder encodeObject:self.favList forKey:@"favList"];
 }
 + (NSString *)getPathToArchive{

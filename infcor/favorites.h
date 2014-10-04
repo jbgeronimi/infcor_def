@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface favorites : NSObject<NSCoding>
+@property (strong,nonatomic) NSDictionary *titleFavoris;
 @property (strong) NSMutableDictionary *favList;
 
 +(NSString *)getPathToArchive;

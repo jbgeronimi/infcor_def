@@ -19,9 +19,9 @@
 @implementation prefsViewController
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
         // Custom initialization
     }
@@ -29,8 +29,13 @@
 }
 -(void) viewWillAppear:(BOOL)animated{
     //self.aParam = [[params alloc]init];
-    self.aPref = [pref getPref];
-    [self.navigationController setNavigationBarHidden:YES];
+    //customisation de la barre de nav
+    [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                            NSFontAttributeName: [UIFont fontWithName:@"Code-BOLD" size:17.0f]
+                                                            }];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     //self.AP = self.aPref.alangue;
     //self.allParams = self.aParam.allParams;
    // self.title = @"Options";
@@ -40,6 +45,11 @@
                        @"mot_corse": @[@"Talianu",@"Inglese",@"Natura",@"Prununzia",@"Definizione",@"Etimulugia",@"Grammatica",@"Variante",@"Sinonimi",@"Antonimi",@"Derivati Cumposti",@"Spressioni è Pruverbii",@"Analugie",@"Citazioni dà Autori",@"Bibliografia",@"Indice"],
                        @"mot_francais" : @[@"Italien",@"Anglais",@"Genre",@"Prononciation",@"Définition en Corse",@"Etymologie",@"Grammaire",@"Variantes Graphiques",@"Synonymes",@"Antonymes",@"Dérivés Composés",@"Expressions et Proverbes",@"Analogies",@"Citations d'Auteurs",@"Bibliographie",@"Indice"]
                        };
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    self.aPref = [pref getPref];
+    self.title = [self.aPref.titlePrefs valueForKey:self.aPref.alangue];
     [self.tableView reloadData];
 }
 
@@ -54,16 +64,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     //self.aPref.params = [pref getPref].params;
     // un tableau avec tous les elements de params
-    self.afficheParams=[[UITableView alloc] init];
-    self.afficheParams.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.afficheParams.delegate = self;
-    self.afficheParams.dataSource = self;
-    //self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    //self.tableView.sectionFooterHeight = 16;
-    //self.tableView.rowHeight = 39;
-    //if (self.modalPresentationStyle == UIModalPresentationCustom) {    }
+    //self.tableView.bounds = CGRectMake(0, 444, [UIScreen mainScreen].bounds.size.width , [UIScreen mainScreen].bounds.size.height -99);
+    //NSLog(@"hei %lu, ecran %f",(long)self.tableView.frame.origin.y,[UIScreen mainScreen].bounds.size.height -99);
+    //self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 44, [UIScreen mainScreen].bounds.size.width , [UIScreen mainScreen].bounds.size.height -99)];
+    //self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }
 /*
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -137,7 +148,9 @@
     //ViewController *VC = [[ViewController alloc] init];
     //pref *aPref = [[pref alloc] init];
     //aPref.params= self.aPref.params;
+    self.title = @"";
     [pref savePref:self.aPref];
+   // [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     //VC.params = self.aPref.params;
     //[self dismissViewControllerAnimated:YES completion:nil];
 }
