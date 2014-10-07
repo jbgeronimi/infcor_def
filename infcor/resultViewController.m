@@ -56,7 +56,16 @@
     if(self.risultati){
         //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [self.spinner stopAnimating];}
-    //    [super viewDidAppear:animated];
+    self.aPref = [pref getPref];
+    NSMutableArray *dbb_queryPlus = [[NSMutableArray alloc] initWithArray:@[@"FRANCESE"]];
+    [dbb_queryPlus addObjectsFromArray:self.aPref.allParams[@"dbb_query"] ];
+    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/debut.php?mot=%@&langue=%@&param=%@", self.searchText, self.aPref.alangue,[dbb_queryPlus componentsJoinedByString:@" "] ];
+    cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //Connection à la base en mode asynchrone : utilisation de didReceiveresponse,didReceiveData,willCacheResponse,connectionDidFinishLoading
+    self.searchURL = [NSURL URLWithString:cercaURL];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:self.searchURL];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
 }
 
 - (void)viewDidLoad
@@ -70,16 +79,6 @@
     self.resultTableView.dataSource = self;
     self.resultTableView.separatorStyle = UITableViewCellSelectionStyleNone;
     
-    self.aPref = [pref getPref];
-    NSMutableArray *dbb_queryPlus = [[NSMutableArray alloc] initWithArray:@[@"FRANCESE"]];
-    [dbb_queryPlus addObjectsFromArray:self.aPref.allParams[@"dbb_query"] ];
-    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/debut.php?mot=%@&langue=%@&param=%@", self.searchText, self.aPref.alangue,[dbb_queryPlus componentsJoinedByString:@" "] ];
-    cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//Connection à la base en mode asynchrone : utilisation de didReceiveresponse,didReceiveData,willCacheResponse,connectionDidFinishLoading
-    self.searchURL = [NSURL URLWithString:cercaURL];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:self.searchURL];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
  }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {

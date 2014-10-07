@@ -21,6 +21,6 @@
 @property (strong,nonatomic) NSURL *searchURL;
 @property (strong,nonatomic) UIFont *gio;
 @property UIActivityIndicatorView *spinner;
-@property pref *aPref;
+@property (strong,nonatomic) pref *aPref;
 
 @end

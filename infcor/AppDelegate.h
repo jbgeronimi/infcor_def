@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "pref.h"
+#import "favorites.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

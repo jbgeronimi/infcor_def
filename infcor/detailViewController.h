@@ -18,4 +18,6 @@
 //@property (strong,nonatomic) NSDictionary *allParams;
 @property (strong,nonatomic) UIFont *gio;
 @property pref *aPref;
+@property BOOL isFavorite;
+@property UIBarButtonItem *stella;
 @end

@@ -9,6 +9,7 @@
 #import "detailViewController.h"
 #import "favoritesTableViewController.h"
 #import "pref.h"
+#import "favorites.h"
 
 @interface detailViewController ()
 
@@ -54,13 +55,58 @@
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     [self.navigationController setNavigationBarHidden:NO];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
+    //une etoile de favoris dans la barre de Nav
+    self.stella=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stella"] style:UIBarButtonItemStyleDone target:self action:@selector(cambiaStella:)];
+    [self showStella];
 }
 -(void)viewDidAppear:(BOOL)animated {
     self.aPref = [pref getPref];
+    //il faut checker que le mot appartient aux favoris
+    favorites *aFav = [favorites getFav];
+    if([aFav.favList objectForKey:[self.detailRisultati objectForKey:@"id"]]){
+        self.isFavorite = YES;}
+    [self showStella];
     [self.tableView reloadData];
+
 }
-#pragma mark - Table view data source
+
+-(void)showStella{
+    if(self.isFavorite){
+        self.stella.tintColor = [UIColor colorWithWhite:1 alpha:1];
+    }else {
+        self.stella.tintColor = [UIColor colorWithWhite:.99 alpha:.45];
+    }
+    self.navigationItem.rightBarButtonItem = self.stella;
+}
+
+//la fonction de gestion de l'etoile
+-(void)cambiaStella:(id)sender{
+    if(self.isFavorite){
+        [self removeFavorite];
+        self.isFavorite = NO;
+        [self showStella];
+    }else{
+        [self addFavorite];
+        self.isFavorite = YES;
+        [self showStella];
+    }
+}
+
+//L'ajout des favoris
+-(void)addFavorite{
+    favorites *aFav = [favorites getFav];
+    [aFav.favList setObject:self.detailRisultati forKey:[self.detailRisultati objectForKey:@"id"]];
+    [favorites saveFav:aFav];
+}
+
+//la fonction d'effacement du favoris
+-(void)removeFavorite{
+    favorites *aFavorite = [favorites getFav];
+    [aFavorite.favList removeObjectForKey:[self.detailRisultati objectForKey:@"id"]];
+    //NSLog(@"risultati %@",[self.risultati[0] objectForKey:@"id"]);
+    self.isFavorite = NO;
+    [favorites saveFav:aFavorite];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

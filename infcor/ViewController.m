@@ -131,6 +131,14 @@
                         action:@selector(enleveClavier)
               forControlEvents:UIControlEventEditingDidEndOnExit];
     
+    //une vue pour l'image de fond
+    UIButton *fiond = [[UIButton alloc] initWithFrame:CGRectMake(0, 115, self.view.frame.size.width, self.view.frame.size.height)];
+    [fiond setBackgroundImage:[UIImage imageNamed:@"fiond"] forState:UIControlStateNormal] ;
+    fiond.alpha = 0.19;
+    fiond.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
+    [fiond addTarget:self action:@selector(enleveClavierSuiteTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:fiond];
+        
     //un tableau avec les suggestions
     self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, 115, self.view.frame.size.width - 60, self.view.frame.size.height - 115)];
     self.suggestTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -140,19 +148,12 @@
     self.suggestTableView.dataSource = self;
     self.suggestTableView.rowHeight = 28;
     [self.view addSubview:self.suggestTableView];
-    
-    //une vue pour l'image de fond
-    UIImageView *fiond = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fiond"]];
-    fiond.frame = CGRectMake(0, 115, self.view.frame.size.width, self.view.frame.size.height);
-    fiond.alpha = 0.19;
-    fiond.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
-    [self.view addSubview:fiond];
-    
+
 }
 
 //la croix d'effacement
 -(void)clearTextField:(id)sender {
-    self.searchText.text = @"";
+    self.searchText.text = nil;
     self.suggest = nil;
     [self.suggestTableView reloadData];
 }
@@ -220,6 +221,10 @@
     motVC.gio = self.gio;
     [self.navigationController pushViewController:motVC animated:YES];
 }
+//@si on tape quelque part sur l'ecran
+-(void)enleveClavierSuiteTap {
+    [self.searchText resignFirstResponder];
+ }
 
 //si le mot a ete tape en entier et que "enter" a ete presse -> nouveau tableau avec toutes les possibilités associées au mot
 -(BOOL)enleveClavier {
@@ -230,7 +235,6 @@
     risultatiVC.title = self.searchText.text;
     risultatiVC.gio = self.gio;
     if (risultatiVC.searchText.length > 1){
-        //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self.navigationController pushViewController:risultatiVC animated:YES];
     }
     [self.searchText resignFirstResponder];
@@ -245,7 +249,7 @@
     NSDictionary *userInfo = [note userInfo];
     CGSize keySize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     CGRect newTable = self.suggestTableView.frame;
-    newTable.size.height = self.view.frame.size.height - MIN(keySize.height, keySize.width);
+    newTable.size.height = self.view.frame.size.height - 115 - MIN(keySize.height, keySize.width);
     self.suggestTableView.frame = newTable;
 }
 
@@ -297,18 +301,20 @@
                               @"mot_francais" : fcese,
                               @"affiche_liste":liste,
                               @"affiche_mot":mots};
-    //self.aPref = [[pref alloc]init];
-    //self.aParam = [[params alloc] init];
-    //self.aParam.parametres = aPref.params;
+//initialisation des prefs
     self.aPref = [pref getPref];
     if(!self.aPref) {
         self.aPref = [[pref alloc] initWithParams:parames];
         self.aPref.alangue = @"mot_corse";
         [pref savePref:self.aPref];
     }
-    self.aPref.alangue = @"mot_corse";
-    //self.aPref.alangue = self.aPref.alangue;
-    self.lindex = 0;
+//initialisation des favoris
+    self.aFav = [favorites getFav];
+    if(!self.aFav){
+        self.aFav = [[favorites alloc] init];
+    }
+    [self.aFav.favList removeObjectForKey:@": favorits"];
+
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};
 }
 
@@ -317,7 +323,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
-   // self.aPref.alangue = self.alangue;
+    [favorites saveFav:self.aFav];
     [pref savePref:self.aPref];
 }
 @end

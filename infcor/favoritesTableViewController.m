@@ -26,7 +26,6 @@
                                                             }];
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000]];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    self.aFav = [favorites getFav];
     self.view.backgroundColor = [UIColor whiteColor];
     //self.favoritesTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height -99)];
     self.favoritesTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;

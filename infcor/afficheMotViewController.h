@@ -23,7 +23,7 @@
 @property (strong,nonatomic) UIFont *gio;
 @property (strong, nonatomic) UIScrollView *motView;
 @property UIActivityIndicatorView *spinner;
-@property BOOL willSetFavorite;
+//@property BOOL willSetFavorite;
 @property BOOL isFavorite;
 @property UIBarButtonItem *stella;
 @end

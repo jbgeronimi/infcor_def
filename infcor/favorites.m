@@ -21,7 +21,7 @@
         self = [NSKeyedUnarchiver unarchiveObjectWithFile:[docsDir stringByAppendingPathComponent:@"favorites.model"]];
     }else{
         self.favList = [[NSMutableDictionary alloc] initWithCapacity:1];
-        [self.favList setObject:@"x" forKey:@"y"];
+        [self.favList setObject:@": favoris" forKey:@": favorits"];
     }
     self.titleFavoris = @{@"mot_corse":@"PREFERITI",
                           @"mot_francais":@"FAVORIS"};

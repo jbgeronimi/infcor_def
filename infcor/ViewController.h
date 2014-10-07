@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "pref.h"
+#import "favorites.h"
 
 @interface ViewController : UIViewController <UIViewControllerTransitioningDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -17,10 +18,11 @@
 @property (strong,nonatomic) NSURL *searchURL;
 @property (strong,nonatomic) NSMutableArray *suggest;
 @property (retain,nonatomic) UITableView *suggestTableView;
-//@property  NSDictionary *params;
+@property  CGPoint location;
 @property (strong,nonatomic) NSDictionary *allParams;
 @property (assign,nonatomic) NSUInteger lindex;
 @property (strong,nonatomic) UIFont *gio;
 @property NSDictionary *defText;
 @property (strong,nonatomic) pref *aPref;
+@property (strong,nonatomic) favorites *aFav;
 @end

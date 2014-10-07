@@ -37,7 +37,6 @@
         self.stella.tintColor = [UIColor colorWithWhite:.99 alpha:.45];
     }
     self.navigationItem.rightBarButtonItem = self.stella;
-    //return self.stella;
 }
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -112,13 +111,12 @@
 
 //la fonction de gestion de l'etoile
 -(void)cambiaStella:(id)sender{
-    if(!(self.willSetFavorite | self.isFavorite)){
-        [self addFavorite];}
     if(self.isFavorite){
         [self removeFavorite];
         self.isFavorite = NO;
         [self showStella];
     }else{
+        [self addFavorite];
         self.isFavorite = YES;
         [self showStella];
     }
@@ -126,35 +124,9 @@
 
 //la fonction d'ajout des favoris
 -(void)addFavorite{
-    self.willSetFavorite = TRUE;
-    NSMutableArray *dbb_queryPlus = [[NSMutableArray alloc] initWithArray:@[@"FRANCESE"]];
-    [dbb_queryPlus addObjectsFromArray:self.aPref.allParams[@"dbb_query"] ];
-    NSString *cercaURL = [NSString stringWithFormat:@"http://adecec.net/infcor/try/traitement.php?mot=%@&langue=%@&param=%@", self.searchText, self.aPref.alangue,[dbb_queryPlus componentsJoinedByString:@" "] ];
-    cercaURL = [cercaURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //NSLog(@"dbb_query de fav %@",dbb_queryPlus);
-    NSURL *cerca = [[NSURL alloc] initWithString:cercaURL];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:cerca];
-    // Requete ASynchrone
-    favorites *aFavorite = [[favorites alloc] init];
-    aFavorite = [favorites getFav];
-    if(!aFavorite){ aFavorite.favList = [[NSMutableDictionary alloc] init];
-        [aFavorite.favList setObject:@"x" forKey:@"xyz"];}
-    else {[aFavorite.favList removeObjectForKey:@"y"];}
-    __block NSMutableArray *json;
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
-                               if (data) {json = [NSJSONSerialization JSONObjectWithData:data
-                                                                                 options:0
-                                                                                   error:nil];}
-                               NSDictionary *tmpJson = json[0];
-                               NSString *unique  = [tmpJson valueForKey:@"id"];
-                               [aFavorite.favList setObject:tmpJson forKey:unique];
-                               //aFavorite.favList = muTemp ;
-                               //NSLog(@"afav %@",aFavorite.favList);
-                               [favorites saveFav:aFavorite];
-                         }];
-    //self.isFavorite = YES;
+    favorites *aFav = [favorites getFav];
+    [aFav.favList setObject:self.risultati[0] forKey:[self.risultati[0] objectForKey:@"id"]];
+    [favorites saveFav:aFav];
 }
 
 //la fonction d'effacement du favoris

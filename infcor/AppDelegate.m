@@ -123,14 +123,12 @@
                               @"affiche_mot":mots};
     //self.aPref = [[pref alloc]init];
     self.aPref = [pref getPref];
-    //self.aParam.parametres = aPref.params;
-    //NSLog(@"pref %@",self.aPref.params);
     if(!self.aPref) {
         self.aPref = [[pref alloc] initWithParams:parames];
         //self.aParam.parametres = aPref.params;
         [pref savePref:self.aPref];
     }
-    self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};}
+   self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
