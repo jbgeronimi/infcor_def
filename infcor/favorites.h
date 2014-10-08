@@ -10,7 +10,7 @@
 
 @interface favorites : NSObject<NSCoding>
 @property (strong,nonatomic) NSDictionary *titleFavoris;
-@property (strong) NSMutableDictionary *favList;
+@property (strong,nonatomic) NSMutableDictionary *favList;
 
 +(NSString *)getPathToArchive;
 +(favorites *)getFav;

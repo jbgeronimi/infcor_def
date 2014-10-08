@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "pref.h"
+#import "favorites.h"
 
 @interface detailViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
 
@@ -17,7 +18,8 @@
 //@property (strong, nonatomic) NSDictionary *params;
 //@property (strong,nonatomic) NSDictionary *allParams;
 @property (strong,nonatomic) UIFont *gio;
-@property pref *aPref;
+@property (strong,nonatomic) pref *aPref;
+@property (strong,nonatomic) favorites *aFav;
 @property BOOL isFavorite;
 @property UIBarButtonItem *stella;
 @end

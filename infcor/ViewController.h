@@ -18,7 +18,7 @@
 @property (strong,nonatomic) NSURL *searchURL;
 @property (strong,nonatomic) NSMutableArray *suggest;
 @property (retain,nonatomic) UITableView *suggestTableView;
-@property  CGPoint location;
+@property  float maxTable;
 @property (strong,nonatomic) NSDictionary *allParams;
 @property (assign,nonatomic) NSUInteger lindex;
 @property (strong,nonatomic) UIFont *gio;

@@ -67,6 +67,11 @@
                                                  name:@"UIKeyboardWillShowNotification"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:@"UIKeyboardWillHideNotification"
+                                               object:nil];
+
     UIFont *titre = [UIFont fontWithName:@"Sansation" size:20];
     NSDictionary *langInit = @{@"mot_corse":@"Corsu \u2192 Francese",
                                @"mot_francais":@"Français \u2192 Corse"};
@@ -88,18 +93,6 @@
     self.primu.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
     [self.view addSubview:self.primu];
     
-    /*
-    //le bouton d'acces aux preferences
-    UIButton *prefBouton = [UIButton buttonWithType:UIButtonTypeSystem] ;
-    prefBouton.tintColor = [UIColor colorWithWhite:.9 alpha:1];
-    prefBouton.frame = CGRectMake(5, 21, 42, 42);
-    UIImage *btn = [UIImage imageNamed:@"prefs.png"];
-    [prefBouton setImage:btn forState:UIControlStateNormal];
-    [prefBouton addTarget:self
-                   action:@selector(preferences:)
-         forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:prefBouton];
-    */
     //la zone de saisie du texte, le texte par defaut  et son bouton d'effacement
     self.searchText = [[UITextField alloc] initWithFrame:CGRectMake(30, 64, self.view.frame.size.width - 60, 39)];
     //le texte par defaut
@@ -133,18 +126,18 @@
     
     //une vue pour l'image de fond
     UIButton *fiond = [[UIButton alloc] initWithFrame:CGRectMake(0, 115, self.view.frame.size.width, self.view.frame.size.height)];
-    [fiond setBackgroundImage:[UIImage imageNamed:@"fiond"] forState:UIControlStateNormal] ;
+    [fiond setImage:[UIImage imageNamed:@"fiond"] forState:UIControlStateNormal] ;
     fiond.alpha = 0.19;
-    fiond.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
+    fiond.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [fiond addTarget:self action:@selector(enleveClavierSuiteTap) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:fiond];
         
     //un tableau avec les suggestions
-    self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, 115, self.view.frame.size.width - 60, self.view.frame.size.height - 115)];
+    self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, 115, self.view.frame.size.width - 60, 8)];
     self.suggestTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.suggestTableView.delegate = self;
     self.suggestTableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    self.suggestTableView.backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];/*backgroundColor = [[UIColor alloc] initWithWhite:0.5 alpha:0.08];*/
+    self.suggestTableView./*backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];*/backgroundColor = [[UIColor alloc] initWithWhite:0.5 alpha:0.08];
     self.suggestTableView.dataSource = self;
     self.suggestTableView.rowHeight = 28;
     [self.view addSubview:self.suggestTableView];
@@ -155,6 +148,9 @@
 -(void)clearTextField:(id)sender {
     self.searchText.text = nil;
     self.suggest = nil;
+    CGRect newTable = self.suggestTableView.frame;
+    newTable.size.height = 2;
+    self.suggestTableView.frame = newTable;
     [self.suggestTableView reloadData];
 }
 
@@ -171,6 +167,7 @@
                                                                                  options:0
                                                                                    error:nil];}
                                self.suggest = json;
+                               self.suggestTableView.frame = CGRectMake(30, 115, self.view.frame.size.width - 60, MIN(8 + self.suggest.count * 28, self.maxTable));
                                [self.suggestTableView reloadData];
                            }];
 }
@@ -239,8 +236,8 @@
     }
     [self.searchText resignFirstResponder];
     CGRect newTable = self.suggestTableView.frame;
-    newTable.size.height = self.view.frame.size.height - 115;
-    self.suggestTableView.frame = newTable;
+    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - 115);
+    //self.suggestTableView.frame = newTable;
     return YES;
 }
 
@@ -249,10 +246,16 @@
     NSDictionary *userInfo = [note userInfo];
     CGSize keySize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     CGRect newTable = self.suggestTableView.frame;
-    newTable.size.height = self.view.frame.size.height - 115 - MIN(keySize.height, keySize.width);
+    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - 115 - MIN(keySize.height, keySize.width));
+    self.maxTable = self.view.frame.size.height - 115 - MIN(keySize.height, keySize.width);
     self.suggestTableView.frame = newTable;
 }
 
+-(void)keyboardWillHide:(NSNotification *)note{
+    CGRect newTable = self.suggestTableView.frame;
+    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - 115 - self.tabBarController.tabBar.frame.size.height);
+    self.suggestTableView.frame = newTable;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -312,6 +315,7 @@
     self.aFav = [favorites getFav];
     if(!self.aFav){
         self.aFav = [[favorites alloc] init];
+        [favorites saveFav:self.aFav];
     }
     [self.aFav.favList removeObjectForKey:@": favorits"];
 
@@ -323,7 +327,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
-    [favorites saveFav:self.aFav];
+    //[favorites saveFav:self.aFav];
     [pref savePref:self.aPref];
 }
 @end

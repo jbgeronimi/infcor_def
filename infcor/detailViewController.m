@@ -62,8 +62,8 @@
 -(void)viewDidAppear:(BOOL)animated {
     self.aPref = [pref getPref];
     //il faut checker que le mot appartient aux favoris
-    favorites *aFav = [favorites getFav];
-    if([aFav.favList objectForKey:[self.detailRisultati objectForKey:@"id"]]){
+    self.aFav = [favorites getFav];
+    if([self.aFav.favList objectForKey:[self.detailRisultati objectForKey:@"id"]]){
         self.isFavorite = YES;}
     [self showStella];
     [self.tableView reloadData];
@@ -94,18 +94,17 @@
 
 //L'ajout des favoris
 -(void)addFavorite{
-    favorites *aFav = [favorites getFav];
-    [aFav.favList setObject:self.detailRisultati forKey:[self.detailRisultati objectForKey:@"id"]];
-    [favorites saveFav:aFav];
+    //self.aFav = [favorites getFav];
+    [self.aFav.favList setObject:self.detailRisultati forKey:[self.detailRisultati objectForKey:@"id"]];
+    [favorites saveFav:self.aFav];
 }
 
 //la fonction d'effacement du favoris
 -(void)removeFavorite{
-    favorites *aFavorite = [favorites getFav];
-    [aFavorite.favList removeObjectForKey:[self.detailRisultati objectForKey:@"id"]];
+    [self.aFav.favList removeObjectForKey:[self.detailRisultati objectForKey:@"id"]];
     //NSLog(@"risultati %@",[self.risultati[0] objectForKey:@"id"]);
     self.isFavorite = NO;
-    [favorites saveFav:aFavorite];
+    [favorites saveFav:self.aFav];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
