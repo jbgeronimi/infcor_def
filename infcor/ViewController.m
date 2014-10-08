@@ -318,6 +318,7 @@
         [favorites saveFav:self.aFav];
     }
     [self.aFav.favList removeObjectForKey:@": favorits"];
+    [favorites saveFav:self.aFav];
 
     self.defText = @{@"mot_corse":@"a parolla à traduce",@"mot_francais":@"tapez le mot à traduire"};
 }

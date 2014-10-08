@@ -46,12 +46,28 @@
     [self.tableView reloadData];
 }
 
+//la fonction d'effacement du favoris
+-(void)removeFavorite:(NSString *)nome {
+    [self.aFav.favList removeObjectForKey:nome];
+    [favorites saveFav:self.aFav];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.aFav.favList.count;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self removeFavorite:self.allkeys[indexPath.row]];
+         }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
