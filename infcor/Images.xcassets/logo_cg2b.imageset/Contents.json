@@ -2,17 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "logo_cg2b_50.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "starPiena100.png"
+      "filename" : "logo_cg2b_100.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "starPiena150.png"
+      "filename" : "logo_cg2b_150.png"
     }
   ],
   "info" : {

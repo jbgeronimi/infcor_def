@@ -27,6 +27,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     self.aPref = [pref getPref];
+    NSLog(@"navbar %lu",(long)self.navigationController.navigationBar.frame.size.height);
     [self.tableView reloadData];
 }
     

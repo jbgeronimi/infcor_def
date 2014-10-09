@@ -33,13 +33,13 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     //[self.searchText becomeFirstResponder];
 }
 -(void)viewDidAppear:(BOOL)animated{
-    [self.navigationController setNavigationBarHidden:YES];
+    self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,21, 220, 42);
     self.aPref = [pref getPref];
-
 }
 - (void)viewDidLoad
 {
@@ -56,11 +56,17 @@
     self.view.autoresizesSubviews = YES;
     self.view.backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];
     self.gio = [UIFont fontWithName:@"Klill" size:20];
+//Gestion de mode paysage pour iOS8 : une notification
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationChanged:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
     // je cree une vue pour le fond bleu
-    UIView *lefond = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 115)];
-    [lefond setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    lefond.backgroundColor = [UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000];
-    [self.view addSubview:lefond];
+    self.lefond = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 115)];
+    [self.lefond setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    self.lefond.backgroundColor = [UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000];
+    [self.view addSubview:self.lefond];
     //detection du clavier pour adapter la hauteur des suggestions
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -75,9 +81,10 @@
     UIFont *titre = [UIFont fontWithName:@"Sansation" size:20];
     NSDictionary *langInit = @{@"mot_corse":@"Corsu \u2192 Francese",
                                @"mot_francais":@"Français \u2192 Corse"};
+    
     //corsu - francese ou  francais-corse
     self.primu = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.primu.frame = CGRectMake(55,21, self.view.frame.size.width - 100, 42);
+    self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,21, 220, 42);
     [self.primu.titleLabel setTextAlignment:NSTextAlignmentLeft];
     [self.primu.titleLabel setFont:titre];
     self.primu.tintColor = [UIColor colorWithWhite:1 alpha:1];
@@ -90,7 +97,6 @@
     [self.primu addTarget:self
                    action:@selector(changeLanguage:)
          forControlEvents:UIControlEventTouchUpInside];
-    self.primu.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
     [self.view addSubview:self.primu];
     
     //la zone de saisie du texte, le texte par defaut  et son bouton d'effacement
@@ -125,7 +131,7 @@
               forControlEvents:UIControlEventEditingDidEndOnExit];
     
     //une vue pour l'image de fond
-    UIButton *fiond = [[UIButton alloc] initWithFrame:CGRectMake(0, 115, self.view.frame.size.width, self.view.frame.size.height)];
+    UIButton *fiond = [[UIButton alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 71, self.view.frame.size.width, self.view.frame.size.height)];
     [fiond setImage:[UIImage imageNamed:@"fiond"] forState:UIControlStateNormal] ;
     fiond.alpha = 0.19;
     fiond.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -133,7 +139,7 @@
     [self.view addSubview:fiond];
         
     //un tableau avec les suggestions
-    self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, 115, self.view.frame.size.width - 60, 8)];
+    self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, self.navigationController.navigationBar.frame.size.height + 71, self.view.frame.size.width - 60, 8)];
     self.suggestTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.suggestTableView.delegate = self;
     self.suggestTableView.separatorStyle = UITableViewCellSelectionStyleNone;
@@ -141,7 +147,28 @@
     self.suggestTableView.dataSource = self;
     self.suggestTableView.rowHeight = 28;
     [self.view addSubview:self.suggestTableView];
+    
+    //les logos de la CTC et du CG2b
+    UIImageView *logoCtc = [[UIImageView alloc] initWithFrame:CGRectMake(15, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height - 52, self.view.frame.size.width /3, 50)];
+    logoCtc.image = [UIImage imageNamed:@"logo_ctc"];
+    logoCtc.alpha = 0.39;
+    [self.view addSubview:logoCtc];
+    UIImageView *logoCg2b = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 70, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height - 53, 53, 50)];
+    logoCg2b.image = [UIImage imageNamed:@"logo_cg2b"];
+    logoCg2b.alpha = 0.39;
+    [self.view addSubview:logoCg2b];
+}
 
+//gestion du paysage pour iOS8 : on remonte toutes le vues en paysage
+- (void)orientationChanged:(NSNotification *)notification
+{
+    self.lefond.frame = CGRectMake(0, 0, self.view.frame.size.width, self.navigationController.navigationBar.frame.size.height + 71);
+    self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,self.navigationController.navigationBar.frame.size.height - 22, 220, 42);
+    self.searchText.frame = CGRectMake(30, self.navigationController.navigationBar.frame.size.height + 22, self.view.frame.size.width - 60, 39);
+    self.primu.imageEdgeInsets = UIEdgeInsetsMake(0, self.primu.frame.size.width - 50 , 0, 0);
+  //  [self.primu setTitleEdgeInsets:UIEdgeInsetsMake(0, 25 - (self.primu.frame.size.width /2) , 0, 0)];
+  //  self.primu.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
+    self.suggestTableView.frame = CGRectMake(30, self.navigationController.navigationBar.frame.size.height + 71, self.view.frame.size.width - 60, MIN(8 + self.suggest.count * 28, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.tabBarController.tabBar.frame.size.height - 71));
 }
 
 //la croix d'effacement
@@ -167,7 +194,7 @@
                                                                                  options:0
                                                                                    error:nil];}
                                self.suggest = json;
-                               self.suggestTableView.frame = CGRectMake(30, 115, self.view.frame.size.width - 60, MIN(8 + self.suggest.count * 28, self.maxTable));
+                               self.suggestTableView.frame = CGRectMake(30, self.navigationController.navigationBar.frame.size.height + 71, self.view.frame.size.width - 60, MIN(8 + self.suggest.count * 28, self.maxTable));
                                [self.suggestTableView reloadData];
                            }];
 }
@@ -236,7 +263,7 @@
     }
     [self.searchText resignFirstResponder];
     CGRect newTable = self.suggestTableView.frame;
-    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - 115);
+    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 71);
     //self.suggestTableView.frame = newTable;
     return YES;
 }
@@ -246,14 +273,15 @@
     NSDictionary *userInfo = [note userInfo];
     CGSize keySize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     CGRect newTable = self.suggestTableView.frame;
-    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - 115 - MIN(keySize.height, keySize.width));
-    self.maxTable = self.view.frame.size.height - 115 - MIN(keySize.height, keySize.width);
+    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 71 - MIN(keySize.height, keySize.width));
+    self.maxTable = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 71 - MIN(keySize.height, keySize.width);
     self.suggestTableView.frame = newTable;
 }
 
 -(void)keyboardWillHide:(NSNotification *)note{
     CGRect newTable = self.suggestTableView.frame;
-    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - 115 - self.tabBarController.tabBar.frame.size.height);
+    newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 71 - self.tabBarController.tabBar.frame.size.height);
+    self.maxTable = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 71;
     self.suggestTableView.frame = newTable;
 }
 - (void)didReceiveMemoryWarning
