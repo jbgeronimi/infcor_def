@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "fiond_320x513.png"
+      "filename" : "aboutPienu_50.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "fiond_640x1027.png"
+      "filename" : "aboutPienu_100.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "fiond_960x1540.png"
+      "filename" : "aboutPienu_150.png"
     }
   ],
   "info" : {

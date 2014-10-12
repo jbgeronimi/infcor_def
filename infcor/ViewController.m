@@ -133,6 +133,7 @@
     //une vue pour l'image de fond
     UIButton *fiond = [[UIButton alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 71, self.view.frame.size.width, self.view.frame.size.height)];
     [fiond setImage:[UIImage imageNamed:@"fiond"] forState:UIControlStateNormal] ;
+    [fiond setImageEdgeInsets:UIEdgeInsetsMake(-10,20,30, -20)];
     fiond.alpha = 0.19;
     fiond.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [fiond addTarget:self action:@selector(enleveClavierSuiteTap) forControlEvents:UIControlEventTouchUpInside];

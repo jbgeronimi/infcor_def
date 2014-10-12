@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "aboutViewController.h"
 #import "prefsViewController.h"
 #import "pref.h"
 #import "ViewController.h"
@@ -33,8 +34,8 @@
    // prefsVC.gio = self.gio;
     UINavigationController *prefsNavController = [[UINavigationController alloc] initWithRootViewController:prefsVC];
     
-    // aboutViewController *aboutVC = [[aboutViewController alloc] init];
-    // UINavigationController *aboutNavController = [[UINavigationController alloc] initWithRootViewController:aboutViewController];
+    aboutViewController *aboutVC = [[aboutViewController alloc] init];
+    UINavigationController *aboutNavController = [[UINavigationController alloc] initWithRootViewController:aboutVC];
     
 //les icones de la tabbar
     //la Home
@@ -64,9 +65,17 @@
     //prefsVC.aParam = VC.aParam;
     //prefsVC.params = self.params;
     
+    //about
+    UIImage *aboutPienu = [UIImage imageNamed:@"aboutPienu"];
+    aboutPienu = [aboutPienu imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *aboutViotu = [UIImage imageNamed:@"aboutViotu"];
+    aboutViotu = [aboutViotu imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UITabBarItem *itemAbout = [[UITabBarItem alloc] initWithTitle:@"" image:aboutViotu selectedImage:aboutPienu];
+    aboutVC.tabBarItem = itemAbout;
+    
     //les couleurs
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[navViewController, favNavController, prefsNavController/*,aboutNavController*/];
+    tabBarController.viewControllers = @[navViewController, favNavController, prefsNavController,aboutNavController];
     //tabBarController.tabBar.translucent = NO;
     [tabBarController.tabBar setBarTintColor:[UIColor colorWithRed:0.129 green:0.512 blue:0.99 alpha:0.900]];
     tabBarController.tabBar.backgroundColor = [UIColor blackColor];
