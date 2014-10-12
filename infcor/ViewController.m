@@ -38,7 +38,8 @@
     //[self.searchText becomeFirstResponder];
 }
 -(void)viewDidAppear:(BOOL)animated{
-    self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,21, 220, 42);
+    self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,self.navigationController.navigationBar.frame.size.height - 22, 220, 42);
+//    self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,21, 220, 42);
     self.aPref = [pref getPref];
 }
 - (void)viewDidLoad
@@ -300,9 +301,11 @@
         self.aPref.alangue = @"mot_corse";
     }
     self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.aPref.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
-    //on a change la langue, il faut refaire une requete
-    [self editingChanged:self.searchText.text];
-    [self.suggestTableView reloadData];
+    //on a change la langue, il faut refaire une requete si il y a un texte
+    if(self.searchText.text.length > 0){
+        [self editingChanged:self.searchText.text];
+        [self.suggestTableView reloadData];
+    }
 }
 
 - (void)setDefaultValuesForVariables
