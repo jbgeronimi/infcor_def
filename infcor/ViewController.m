@@ -35,11 +35,9 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    //[self.searchText becomeFirstResponder];
 }
 -(void)viewDidAppear:(BOOL)animated{
     self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,self.navigationController.navigationBar.frame.size.height - 22, 220, 42);
-//    self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,21, 220, 42);
     self.aPref = [pref getPref];
 }
 - (void)viewDidLoad
@@ -63,7 +61,8 @@
                                              selector:@selector(orientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
-    // je cree une vue pour le fond bleu
+
+// je cree une vue pour le fond bleu
     self.lefond = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 115)];
     [self.lefond setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     self.lefond.backgroundColor = [UIColor colorWithRed:0.129 green:0.512 blue:1.000 alpha:1.000];
@@ -83,7 +82,7 @@
     NSDictionary *langInit = @{@"mot_corse":@"Corsu \u2192 Francese",
                                @"mot_francais":@"Français \u2192 Corse"};
     
-    //corsu - francese ou  francais-corse
+//corsu - francese ou  francais-corse
     self.primu = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,21, 220, 42);
     [self.primu.titleLabel setTextAlignment:NSTextAlignmentLeft];
@@ -94,13 +93,12 @@
     self.primu.imageEdgeInsets = UIEdgeInsetsMake(0, self.primu.frame.size.width - 50 , 0, 0);
     [self.primu setTitle:[langInit valueForKey:self.aPref.alangue] forState:UIControlStateNormal];
     [self.primu setTitleEdgeInsets:UIEdgeInsetsMake(0, 25 - (self.primu.frame.size.width /2) , 0, 0)];
-    // NSLog(@"frame image %f",self.primu.imageView.frame.size.width);
     [self.primu addTarget:self
                    action:@selector(changeLanguage:)
          forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.primu];
     
-    //la zone de saisie du texte, le texte par defaut  et son bouton d'effacement
+//la zone de saisie du texte, le texte par defaut  et son bouton d'effacement
     self.searchText = [[UITextField alloc] initWithFrame:CGRectMake(30, 64, self.view.frame.size.width - 60, 39)];
     //le texte par defaut
     self.searchText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self.defText valueForKey:self.aPref.alangue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:1 alpha:0.7]}];
@@ -131,7 +129,7 @@
                         action:@selector(enleveClavier)
               forControlEvents:UIControlEventEditingDidEndOnExit];
     
-    //une vue pour l'image de fond
+//une vue pour l'image de fond
     UIButton *fiond = [[UIButton alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 71, self.view.frame.size.width, self.view.frame.size.height)];
     [fiond setImage:[UIImage imageNamed:@"fiond"] forState:UIControlStateNormal] ;
     [fiond setImageEdgeInsets:UIEdgeInsetsMake(-10,20,30, -20)];
@@ -140,17 +138,17 @@
     [fiond addTarget:self action:@selector(enleveClavierSuiteTap) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:fiond];
         
-    //un tableau avec les suggestions
+//un tableau avec les suggestions
     self.suggestTableView=[[UITableView alloc] initWithFrame:CGRectMake(30, self.navigationController.navigationBar.frame.size.height + 71, self.view.frame.size.width - 60, 8)];
     self.suggestTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.suggestTableView.delegate = self;
     self.suggestTableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    self.suggestTableView./*backgroundColor = [UIColor colorWithRed:0.010 green:0.000 blue:0.098 alpha:1.000];*/backgroundColor = [[UIColor alloc] initWithWhite:0.5 alpha:0.08];
+    self.suggestTableView.backgroundColor = [[UIColor alloc] initWithWhite:0.5 alpha:0.08];
     self.suggestTableView.dataSource = self;
     self.suggestTableView.rowHeight = 28;
     [self.view addSubview:self.suggestTableView];
     
-    //les logos de la CTC et du CG2b
+//les logos de la CTC et du CG2b
     UIImageView *logoCtc = [[UIImageView alloc] initWithFrame:CGRectMake(15, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height - 52, self.view.frame.size.width /3, 50)];
     logoCtc.image = [UIImage imageNamed:@"logo_ctc"];
     logoCtc.alpha = 0.39;
@@ -161,15 +159,13 @@
     [self.view addSubview:logoCg2b];
 }
 
-//gestion du paysage pour iOS8 : on remonte toutes le vues en paysage
+//gestion du paysage : on remonte toutes le vues
 - (void)orientationChanged:(NSNotification *)notification
 {
     self.lefond.frame = CGRectMake(0, 0, self.view.frame.size.width, self.navigationController.navigationBar.frame.size.height + 71);
     self.primu.frame = CGRectMake(self.view.frame.size.width/2 - 110,self.navigationController.navigationBar.frame.size.height - 22, 220, 42);
     self.searchText.frame = CGRectMake(30, self.navigationController.navigationBar.frame.size.height + 22, self.view.frame.size.width - 60, 39);
     self.primu.imageEdgeInsets = UIEdgeInsetsMake(0, self.primu.frame.size.width - 50 , 0, 0);
-  //  [self.primu setTitleEdgeInsets:UIEdgeInsetsMake(0, 25 - (self.primu.frame.size.width /2) , 0, 0)];
-  //  self.primu.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleLeftMargin);
     self.suggestTableView.frame = CGRectMake(30, self.navigationController.navigationBar.frame.size.height + 71, self.view.frame.size.width - 60, MIN(8 + self.suggest.count * 28, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.tabBarController.tabBar.frame.size.height - 71));
 }
 
@@ -237,13 +233,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   	//[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //cas ou on selectionne la suggestion -> definition du mot direct
     afficheMotViewController *motVC=[[afficheMotViewController alloc] init];
     motVC.searchText = self.suggest[indexPath.row];
     motVC.aPref = self.aPref;
- //   motVC.params = self.aPref.params;
     motVC.gio = self.gio;
     [self.navigationController pushViewController:motVC animated:YES];
 }
@@ -255,8 +249,6 @@
 //si le mot a ete tape en entier et que "enter" a ete presse -> nouveau tableau avec toutes les possibilités associées au mot
 -(BOOL)enleveClavier {
     resultViewController *risultatiVC=[[resultViewController alloc] init];
-    //risultatiVC.params = self.aPref.params;
-   // risultatiVC.alangue = self.aPref.alangue;
     risultatiVC.searchText = self.searchText.text;
     risultatiVC.title = self.searchText.text;
     risultatiVC.gio = self.gio;
@@ -266,7 +258,6 @@
     [self.searchText resignFirstResponder];
     CGRect newTable = self.suggestTableView.frame;
     newTable.size.height = MIN(8 + self.suggest.count * 28, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 71);
-    //self.suggestTableView.frame = newTable;
     return YES;
 }
 
@@ -289,7 +280,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)changeLanguage:(UIButton *) sender {
@@ -360,7 +350,6 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
-    //[favorites saveFav:self.aFav];
     [pref savePref:self.aPref];
 }
 @end
